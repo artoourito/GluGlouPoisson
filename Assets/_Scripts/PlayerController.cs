@@ -4,6 +4,9 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     #region Variables
+    [SerializeField] private float forceMulti = 1f;
+
+    private Rigidbody _rb;
     #endregion
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,6 +20,8 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton1Action += OnRandomButton1Called;
         InputManager.Instance.randomButton2Action += OnRandomButton2Called;
         InputManager.Instance.randomButton3Action += OnRandomButton3Called;
+
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void OnDisable()
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void OnBrakePedalCalled()
     {
         Debug.Log("Pedal break");
+        _rb.AddForce(Vector3.forward * forceMulti);
     }
 
     void OnSwitchPedalCalled()
