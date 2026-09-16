@@ -1,10 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
-    [SerializeField] private float forceMulti = 1f;
+    [SerializeField] private float moveSpeed = 0f;
+    [SerializeField] private float targetSpeed = 0f;
+    [SerializeField] private float accelerationRate = 2f;
+    [SerializeField] private float decelerationRate = 3f;
+
+    [SerializeField] private float currentAngle = 0f;
+    [SerializeField] private float targetAngle = 0f;
+    [SerializeField] private float angleStep = 10f;
+    [SerializeField] private float maxAngle = 40f;
+    [SerializeField] private float turnSensitivity = 2f;
+    [SerializeField] private float rotationSpeed = 45f;
+
+    [SerializeField] private List<Transform> wheels = new List<Transform>();
 
     private Rigidbody _rb;
     #endregion
@@ -39,7 +51,26 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentAngle = Mathf.MoveTowards(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
 
+        if (moveSpeed > 0.1f)
+        {
+            float turnAmount = currentAngle * moveSpeed * turnSensitivity * Time.deltaTime;
+            transform.Rotate(0, turnAmount, 0);
+        }
+
+        float currentRate = (targetSpeed > moveSpeed) ? accelerationRate : decelerationRate;
+        moveSpeed = Mathf.MoveTowards(moveSpeed, targetSpeed, currentRate * Time.deltaTime);
+        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+        foreach (Transform wheel in wheels) 
+        {
+            Vector3 wheelRota = wheel.localEulerAngles;
+
+            wheelRota.y = currentAngle;
+
+            wheel.localRotation = Quaternion.Euler(wheelRota);
+        }
     }
 
     void OnCarSteeringWheelCalled()
@@ -50,7 +81,7 @@ public class PlayerController : MonoBehaviour
     void OnBrakePedalCalled()
     {
         Debug.Log("Pedal break");
-        _rb.AddForce(Vector3.forward * forceMulti);
+        targetSpeed = 0f;
     }
 
     void OnSwitchPedalCalled()
@@ -61,6 +92,7 @@ public class PlayerController : MonoBehaviour
     void OnAcceleratorPedalCalled()
     {
         Debug.Log("Pedal d acceleration");
+        targetSpeed = 2f;
     }
 
     void OnAutomaticTransmissionCalled()
@@ -76,10 +108,22 @@ public class PlayerController : MonoBehaviour
     private void OnRandomButton2Called()
     {
         Debug.Log("Bouton random 2");
+        TurnRight();
     }
 
     private void OnRandomButton3Called()
     {
         Debug.Log("Bouton random 3");
+        TurnLeft();
+    }
+
+    private void TurnLeft()
+    {
+        targetAngle = Mathf.Clamp(targetAngle + angleStep, -maxAngle, maxAngle);
+    }
+
+    private void TurnRight()
+    {
+        targetAngle = Mathf.Clamp(targetAngle - angleStep, -maxAngle, maxAngle);
     }
 }
