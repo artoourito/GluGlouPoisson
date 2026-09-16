@@ -29,6 +29,7 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region Properties
+    public Vector2 AutomaticTransmission => _automaticTransmissionInputAction.ReadValue<Vector2>();
     public static InputManager Instance => _instance;
     #endregion
 
@@ -60,7 +61,6 @@ public class InputManager : MonoBehaviour
         _brakePedalInputAction.performed += BrakePedal;
         _switchPedalInputAction.performed += SwitchPedal;
         _acceleratorPedalInputAction.performed += AcceleratorPedal;
-        _automaticTransmissionInputAction.performed += AutomaticTransmission;
         _randomButton1InputAction.performed += RandomButton1;
         _randomButton2InputAction.performed += RandomButton2;
         _randomButton3InputAction.performed += RandomButton3;
@@ -72,7 +72,6 @@ public class InputManager : MonoBehaviour
         _brakePedalInputAction.performed -= BrakePedal;
         _switchPedalInputAction.performed -= SwitchPedal;
         _acceleratorPedalInputAction.performed -= AcceleratorPedal;
-        _automaticTransmissionInputAction.performed -= AutomaticTransmission;
         _randomButton1InputAction.performed -= RandomButton1;
         _randomButton2InputAction.performed -= RandomButton2;
         _randomButton3InputAction.performed -= RandomButton3;
@@ -109,11 +108,6 @@ public class InputManager : MonoBehaviour
     public void AcceleratorPedal(InputAction.CallbackContext context)
     {
         acceleratorPedalAction?.Invoke();
-    }
-
-    public void AutomaticTransmission(InputAction.CallbackContext context)
-    {
-        automaticTransmissionAction?.Invoke();
     }
 
     public void RandomButton1(InputAction.CallbackContext callbackContext) 

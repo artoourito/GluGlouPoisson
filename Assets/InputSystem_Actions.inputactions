@@ -1057,12 +1057,12 @@
                 },
                 {
                     "name": "AutomaticTransmission",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "b0e8f3f4-c699-4868-8982-2389244a19d7",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false,
+                    "initialStateCheck": true,
                     "priority": 0
                 },
                 {
@@ -1144,7 +1144,7 @@
                 {
                     "name": "",
                     "id": "fbd6c355-7f4b-4973-b4fb-310c4443d7c4",
-                    "path": "<Keyboard>/t",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
