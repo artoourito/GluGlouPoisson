@@ -320,13 +320,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 0
   targetSpeed: 0
-  accelerationRate: 2
+  accelerationDuration: 1.5
+  decelerationRate: 3
   currentAngle: 0
   targetAngle: 0
   angleStep: 10
   maxAngle: 60
   turnSensitivity: 0.5
   rotationSpeed: 100
+  currentGear: 0
+  minGear: -1
+  maxGear: 1
+  maxReverseSpeed: 10
+  maxGear0Speed: 10
+  maxGear1Speed: 25
   wheels:
   - {fileID: 7370812797074531483}
   - {fileID: 5853608840668807357}
@@ -355,7 +362,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 52
   m_CollisionDetection: 0
 --- !u!65 &5807651474139696816
 BoxCollider:
