@@ -935,11 +935,11 @@ PlayerSettings:
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
   enableDirectStorage: 0
-  cloudProjectId: a6645e5e-4413-4da7-a3b2-d438f72ada98
+  cloudProjectId: ffc94921-719e-46b4-84b0-e4db12266825
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: GluglouPoissonLe2
-  organizationId: ored1
+  projectName: Gluglu
+  organizationId: arthurdudu
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
