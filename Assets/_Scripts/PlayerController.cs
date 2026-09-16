@@ -26,11 +26,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxReverseSpeed = 10f;
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
+    [SerializeField] private AnimationCurve accelerationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [SerializeField] private List<Transform> wheels = new List<Transform>();
 
     private Rigidbody _rb;
     private Tween speedTween;
+    private bool _joystickIsUsed = false;
     #endregion
 
     #region Built-in Methods
@@ -66,27 +68,34 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 joystickValue = InputManager.Instance.AutomaticTransmission;
 
-        if (joystickValue.y > 0.8f)
+        if (joystickValue.y > 0.8f && !_joystickIsUsed)
         {
+            _joystickIsUsed = true;
             GearUp();
         }
-        else if (joystickValue.y < -0.8f)
+        else if (joystickValue.y < -0.8f && !_joystickIsUsed)
         {
+            _joystickIsUsed = true;
             GearDown();
+        }
+        else if (Mathf.Abs(joystickValue.y) < 0.3f)
+        {
+            _joystickIsUsed = false;
         }
 
         currentAngle = Mathf.MoveTowards(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
 
-        if (moveSpeed > 0.1f)
+        if (Mathf.Abs(moveSpeed) > 0.1f)
         {
-            float turnAmount = currentAngle * moveSpeed * turnSensitivity * Time.deltaTime;
+            float directionMultiplier = (moveSpeed < 0) ? -1f : 1f;
+
+            float turnAmount = currentAngle * Mathf.Abs(moveSpeed) * turnSensitivity * Time.deltaTime * directionMultiplier;
             transform.Rotate(0, turnAmount, 0);
         }
 
-        float currentRate = (targetSpeed > moveSpeed) ? accelerationDuration : decelerationRate;
-        moveSpeed = Mathf.MoveTowards(moveSpeed, targetSpeed, currentRate * Time.deltaTime);
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
+        // rotation des roues
         foreach (Transform wheel in wheels)
         {
             Vector3 wheelRota = wheel.localEulerAngles;
@@ -107,13 +116,14 @@ public class PlayerController : MonoBehaviour
     void OnBrakePedalCalled()
     {
         Debug.Log("Pedal break");
+        speedTween?.Kill();
+        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, 1f).SetEase(Ease.InQuad);
         targetSpeed = 0f;
     }
 
     void OnSwitchPedalCalled()
     {
         Debug.Log("Pedal Switch");
-        GearUp();
     }
 
     void OnAcceleratorPedalCalled()
@@ -125,7 +135,6 @@ public class PlayerController : MonoBehaviour
     void OnAutomaticTransmissionCalled()
     {
         Debug.Log("Boite auto");
-        GearDown();
     }
 
     private void OnRandomButton1Called()
@@ -149,16 +158,34 @@ public class PlayerController : MonoBehaviour
     #region Vehicule Logic Methods
     private void Accelerator()
     {
-        float currentMaxSpeed = GetMaxSpeedForCurrentGear();
-        targetSpeed = Mathf.Min(currentMaxSpeed, targetSpeed + 2f);
+        float targetGoal = 0f;
+
+        if (currentGear == -1)
+        {
+            targetGoal = -maxReverseSpeed;
+        }
+        else if (currentGear == 0)
+        {
+            targetGoal = maxGear0Speed;
+        }
+        else if (currentGear == 1)
+        {
+            targetGoal = maxGear1Speed;
+        }
+
+        targetSpeed = targetGoal;
+
+        speedTween?.Kill();
+
+        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, targetSpeed, accelerationDuration).SetEase(accelerationCurve);
     }
 
-    private void TurnLeft()
+    private void TurnRight()
     {
         targetAngle = Mathf.Clamp(targetAngle + angleStep, -maxAngle, maxAngle);
     }
 
-    private void TurnRight()
+    private void TurnLeft()
     {
         targetAngle = Mathf.Clamp(targetAngle - angleStep, -maxAngle, maxAngle);
     }
@@ -171,27 +198,19 @@ public class PlayerController : MonoBehaviour
 
     private void GearDown()
     {
-        currentGear = Mathf.Max(0, currentGear - 1);
+        currentGear = Mathf.Max(minGear, currentGear - 1);
         UpdateSpeedLimit();
     }
 
     private void UpdateSpeedLimit()
     {
-        float maxAllowedSpeed = 0f;
+        float maxAllowedSpeed = GetMaxSpeedForCurrentGear();
 
-        switch (currentGear)
+        if (Mathf.Abs(moveSpeed) > maxAllowedSpeed)
         {
-            case 0:
-                maxAllowedSpeed = maxGear0Speed;
-                break;
-            case 1:
-                maxAllowedSpeed = maxGear1Speed;
-                break;
-        }
-
-        if (targetSpeed > maxAllowedSpeed)
-        {
-            targetSpeed = maxAllowedSpeed;
+            speedTween?.Kill();
+            float targetGoal = (currentGear == -1) ? -maxReverseSpeed : maxAllowedSpeed;
+            speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, targetGoal, 1f).SetEase(Ease.OutQuad);
         }
     }
 
@@ -199,6 +218,7 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentGear)
         {
+            case -1: return maxReverseSpeed;
             case 0: return maxGear0Speed;
             case 1: return maxGear1Speed;
             default: return maxGear0Speed;
