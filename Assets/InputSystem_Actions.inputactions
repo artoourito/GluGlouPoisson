@@ -1121,6 +1121,17 @@
                 },
                 {
                     "name": "",
+                    "id": "fecf7c73-a79e-492f-9d4a-4b003cb6a1a4",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "882845ce-dc87-4906-be77-6107249edaa3",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -1134,6 +1145,17 @@
                     "name": "",
                     "id": "43d27584-9484-4a4f-a4db-ef82cada9f15",
                     "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AcceleratorPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c09723ef-7d66-4134-afb9-2f511ab9bae1",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1176,8 +1198,30 @@
                 },
                 {
                     "name": "",
+                    "id": "33486ada-3046-43c9-9757-2e6304b46145",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RandomButton2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2d322d20-0ff5-4838-90bd-a97076e478d4",
                     "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RandomButton3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4ae4be5-7c2c-4351-a5e3-f63b444f2fb5",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
