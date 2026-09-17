@@ -3,7 +3,12 @@ guid: 7e9434871cfbe7545b3bfd9454c04f9b
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: place_parking_line
+    second: {fileID: 2800000, guid: 6a8fb0f69b64bed4daabab777e507b44, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

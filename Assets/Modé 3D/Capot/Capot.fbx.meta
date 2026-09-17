@@ -3,7 +3,12 @@ guid: 8199f107b3e13d74abf69eace1f0bb78
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: voiture haut
+    second: {fileID: 2800000, guid: fe3616c729538bd47930aa1b57f55c5d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

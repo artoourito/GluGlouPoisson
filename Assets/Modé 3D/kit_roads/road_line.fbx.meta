@@ -3,7 +3,12 @@ guid: d72df81198184454a93666961b88314a
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: virage
+    second: {fileID: 2800000, guid: d8463425b5a18114dadd7c9184b4d091, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -3,7 +3,12 @@ guid: 64cd1e12e5b495c48ae2d9c6a304c234
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rond_point_0entry
+    second: {fileID: 2800000, guid: 06a8e0a2756d3d748a8734ff0726e6dd, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

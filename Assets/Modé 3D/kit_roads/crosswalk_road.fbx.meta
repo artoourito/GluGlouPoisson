@@ -3,7 +3,12 @@ guid: 8a15454df701d6245b3bd3d3b17f9e18
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: passage_pieton road
+    second: {fileID: 2800000, guid: 01a856edacc5bf94185208fe45b202d2, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

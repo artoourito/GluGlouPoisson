@@ -3,7 +3,12 @@ guid: 3cc91dd54a1535f49bc345c74594ffa2
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: trottoir_morceau
+    second: {fileID: 2800000, guid: bca2683ba555bdd43a4876d1a31dc175, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

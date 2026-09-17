@@ -3,7 +3,12 @@ guid: 5d20a03e5881a344489a034ab8d7c962
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: place_parking_passagepieton
+    second: {fileID: 2800000, guid: 2a2765a50c14b4c42ab34d012cf06978, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

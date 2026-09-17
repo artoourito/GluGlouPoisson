@@ -3,7 +3,17 @@ guid: 0b0972b9d5e51d441bdded5c8447891c
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: place_parking_corner
+    second: {fileID: 2800000, guid: dfe91e68c309ae24fb52ce1288321a8c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: trottoir
+    second: {fileID: 2800000, guid: b7d112f8a89b383458d5349f737d0083, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
