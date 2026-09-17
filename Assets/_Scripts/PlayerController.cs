@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Tween speedTween;
     private bool _joystickIsUsed = false;
+    private bool _powerOn = false;
     #endregion
 
     #region Built-in Methods
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton1Action += OnRandomButton1Called;
         InputManager.Instance.randomButton2Action += OnRandomButton2Called;
         InputManager.Instance.randomButton3Action += OnRandomButton3Called;
+        InputManager.Instance.powerButtonAction += OnPowerButtonCalled;
 
         _rb = GetComponent<Rigidbody>();
     }
@@ -69,31 +71,34 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton1Action -= OnRandomButton1Called;
         InputManager.Instance.randomButton2Action -= OnRandomButton2Called;
         InputManager.Instance.randomButton3Action -= OnRandomButton3Called;
+        InputManager.Instance.powerButtonAction -= OnPowerButtonCalled;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 joystickValue = InputManager.Instance.AutomaticTransmission;
-
-        if (_isShiftButtonHeld)
+        if (_powerOn)
         {
-            if (joystickValue.y > 0.8f && !_joystickIsUsed)
+            Vector2 joystickValue = InputManager.Instance.AutomaticTransmission;
+
+            if (_isShiftButtonHeld)
             {
-                _joystickIsUsed = true;
-                GearUp();
-            }
-            else if (joystickValue.y < -0.8f && !_joystickIsUsed)
-            {
-                _joystickIsUsed = true;
-                GearDown();
-            }
-            else if (Mathf.Abs(joystickValue.y) < 0.3f)
-            {
-                _joystickIsUsed = false;
+                if (joystickValue.y > 0.8f && !_joystickIsUsed)
+                {
+                    _joystickIsUsed = true;
+                    GearUp();
+                }
+                else if (joystickValue.y < -0.8f && !_joystickIsUsed)
+                {
+                    _joystickIsUsed = true;
+                    GearDown();
+                }
+                else if (Mathf.Abs(joystickValue.y) < 0.3f)
+                {
+                    _joystickIsUsed = false;
+                }
             }
         }
-        
 
         currentAngle = Mathf.MoveTowards(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
 
@@ -186,11 +191,18 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Bouton random 3");
         TurnLeft();
     }
+
+    private void OnPowerButtonCalled()
+    {
+        Power();
+    }
     #endregion
 
     #region Vehicule Logic Methods
     private void Accelerator()
     {
+        if (!_powerOn) return;
+
         float targetGoal = 0f;
 
         if (currentGear == -1)
@@ -256,6 +268,24 @@ public class PlayerController : MonoBehaviour
             case 1: return maxGear1Speed;
             default: return maxGear0Speed;
         }
+    }
+
+    private void Power()
+    {
+        _powerOn = !_powerOn;
+
+        if (_powerOn)
+        {
+            Debug.Log("La voiture est allumé");
+        }
+        else
+        {
+            Debug.Log("la voiture est éteinte");
+        }
+
+        speedTween?.Kill();
+        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, decelerationDuration).SetEase(Ease.OutSine);
+        targetSpeed = 0f;
     }
     #endregion
 }

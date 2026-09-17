@@ -1016,9 +1016,9 @@
             "id": "d4f836b1-4ecd-4463-8543-f8bf29e201d0",
             "actions": [
                 {
-                    "name": "CarSteeringWheel",
+                    "name": "AcceleratorPedal",
                     "type": "Button",
-                    "id": "66a0d71d-c759-4ed4-bfe1-a694d71e00b6",
+                    "id": "64c03c62-e320-4d15-9921-ca9a770ba429",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1046,9 +1046,9 @@
                     "priority": 0
                 },
                 {
-                    "name": "AcceleratorPedal",
+                    "name": "CarSteeringWheel",
                     "type": "Button",
-                    "id": "64c03c62-e320-4d15-9921-ca9a770ba429",
+                    "id": "66a0d71d-c759-4ed4-bfe1-a694d71e00b6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1089,6 +1089,16 @@
                     "name": "RandomButton3",
                     "type": "Button",
                     "id": "2fcbbf77-34ca-4022-a349-821cea69010d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "PowerButton",
+                    "type": "Button",
+                    "id": "39489521-f47e-4595-9fe9-dba1f585cb2b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1237,6 +1247,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "RandomButton3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8773462-dff8-466d-9862-97f22c4fe08e",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PowerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

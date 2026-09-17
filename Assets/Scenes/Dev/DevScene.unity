@@ -1008,6 +1008,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 13400000, guid: 54a184e2c37f405408a68d54d507ea52, type: 2}
     - target: {fileID: 7648150771720964596, guid: de8699eb2bb2b4a4bb52de15f3233391, type: 3}
+      propertyPath: rotationSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648150771720964596, guid: de8699eb2bb2b4a4bb52de15f3233391, type: 3}
       propertyPath: decelerationRate
       value: 3
       objectReference: {fileID: 0}
