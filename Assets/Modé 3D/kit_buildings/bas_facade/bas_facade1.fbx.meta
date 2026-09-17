@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: thBuildingsShop-20
-    second: {fileID: 2800000, guid: 25d48f27dd2308a4e821d0c3f5163016, type: 3}
+    second: {fileID: 2800000, guid: 54bd28c16ad1fef43a13f913bc0aee23, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
