@@ -5,19 +5,22 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     #region Variables
+    public event Action startAcceleratorPedalAction;
+    public event Action cancelAcceleratorPedalAction;
+    public event Action startBrakePedalAction;
+    public event Action cancelBrakePedalAction;
+    public event Action startSwitchPedalAction;
+    public event Action cancelSwitchPedalAction;
     public event Action carSteeringWheelAction;
-    public event Action brakePedalAction;
-    public event Action switchPedalAction;
-    public event Action acceleratorPedalAction;
     public event Action automaticTransmissionAction;
     public event Action randomButton1Action;
     public event Action randomButton2Action;
     public event Action randomButton3Action;
 
-    private InputAction _carSteeringWheelInputAction;
+    private InputAction _acceleratorPedalInputAction;
     private InputAction _brakePedalInputAction;
     private InputAction _switchPedalInputAction;
-    private InputAction _acceleratorPedalInputAction;
+    private InputAction _carSteeringWheelInputAction;
     private InputAction _automaticTransmissionInputAction;
     private InputAction _randomButton1InputAction;
     private InputAction _randomButton2InputAction;
@@ -57,10 +60,13 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
+        _acceleratorPedalInputAction.started += StartAcceleratorPedal;
+        _acceleratorPedalInputAction.canceled += CancelAcceleratorPedal;
+        _brakePedalInputAction.started += StartBrakePedal;
+        _brakePedalInputAction.canceled += CancelBrakePedal;
+        _switchPedalInputAction.started += StartSwitchPedal;
+        _switchPedalInputAction.canceled += CancelSwitchPedal;
         _carSteeringWheelInputAction.performed += CarSteeringWheel;
-        _brakePedalInputAction.performed += BrakePedal;
-        _switchPedalInputAction.performed += SwitchPedal;
-        _acceleratorPedalInputAction.performed += AcceleratorPedal;
         _randomButton1InputAction.performed += RandomButton1;
         _randomButton2InputAction.performed += RandomButton2;
         _randomButton3InputAction.performed += RandomButton3;
@@ -68,10 +74,13 @@ public class InputManager : MonoBehaviour
 
     private void OnDisable()
     {
+        _acceleratorPedalInputAction.started -= StartAcceleratorPedal;
+        _acceleratorPedalInputAction.canceled -= CancelAcceleratorPedal;
+        _brakePedalInputAction.started -= StartBrakePedal;
+        _brakePedalInputAction.canceled -= CancelBrakePedal;
+        _switchPedalInputAction.started -= StartSwitchPedal;
+        _switchPedalInputAction.canceled -= CancelSwitchPedal;
         _carSteeringWheelInputAction.performed -= CarSteeringWheel;
-        _brakePedalInputAction.performed -= BrakePedal;
-        _switchPedalInputAction.performed -= SwitchPedal;
-        _acceleratorPedalInputAction.performed -= AcceleratorPedal;
         _randomButton1InputAction.performed -= RandomButton1;
         _randomButton2InputAction.performed -= RandomButton2;
         _randomButton3InputAction.performed -= RandomButton3;
@@ -89,25 +98,39 @@ public class InputManager : MonoBehaviour
         
     }
     #endregion
+    public void StartAcceleratorPedal(InputAction.CallbackContext context)
+    {
+        startAcceleratorPedalAction?.Invoke();
+    }
+
+    public void CancelAcceleratorPedal(InputAction.CallbackContext context)
+    {
+        cancelAcceleratorPedalAction?.Invoke();
+    }
+
+    public void StartBrakePedal(InputAction.CallbackContext callbackContext)
+    {
+        startBrakePedalAction?.Invoke();
+    }
+
+    public void CancelBrakePedal(InputAction.CallbackContext callbackContext)
+    {
+        cancelBrakePedalAction?.Invoke();
+    }
+
+    public void StartSwitchPedal(InputAction.CallbackContext context) 
+    {
+        startSwitchPedalAction?.Invoke();
+    }
+
+    public void CancelSwitchPedal(InputAction.CallbackContext context)
+    {
+        cancelSwitchPedalAction?.Invoke();
+    }
 
     public void CarSteeringWheel(InputAction.CallbackContext callbackContext)
     {
         carSteeringWheelAction?.Invoke();
-    }
-
-    public void BrakePedal(InputAction.CallbackContext callbackContext)
-    {
-        brakePedalAction?.Invoke();
-    }
-
-    public void SwitchPedal(InputAction.CallbackContext context) 
-    {
-        switchPedalAction?.Invoke();
-    }
-
-    public void AcceleratorPedal(InputAction.CallbackContext context)
-    {
-        acceleratorPedalAction?.Invoke();
     }
 
     public void RandomButton1(InputAction.CallbackContext callbackContext) 

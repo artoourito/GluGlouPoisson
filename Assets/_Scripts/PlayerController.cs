@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float targetSpeed = 0f;
     [SerializeField] private float accelerationDuration = 1.5f;
-    [SerializeField] private float decelerationRate = 3f;
+    [SerializeField] private float decelerationDuration = 4f;
+    [SerializeField] private float brakingDuration = 1f;
 
     [Header("Rotation")]
     [SerializeField] private float currentAngle = 0f;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
     [SerializeField] private AnimationCurve accelerationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    private bool _isShiftButtonHeld;
 
     [SerializeField] private List<Transform> wheels = new List<Transform>();
 
@@ -39,10 +41,13 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        InputManager.Instance.startAcceleratorPedalAction += OnAcceleratorPedalStarted;
+        InputManager.Instance.cancelAcceleratorPedalAction += OnAcceleratorPedalCanceled;
+        InputManager.Instance.startBrakePedalAction += OnBrakePedalStarted;
+        InputManager.Instance.cancelBrakePedalAction += OnBrakePedalCanceled;
+        InputManager.Instance.startSwitchPedalAction += OnSwitchPedalStarted;
+        InputManager.Instance.cancelSwitchPedalAction += OnSwitchPedalCanceled;
         InputManager.Instance.carSteeringWheelAction += OnCarSteeringWheelCalled;
-        InputManager.Instance.brakePedalAction += OnBrakePedalCalled;
-        InputManager.Instance.switchPedalAction += OnSwitchPedalCalled;
-        InputManager.Instance.acceleratorPedalAction += OnAcceleratorPedalCalled;
         InputManager.Instance.automaticTransmissionAction += OnAutomaticTransmissionCalled;
         InputManager.Instance.randomButton1Action += OnRandomButton1Called;
         InputManager.Instance.randomButton2Action += OnRandomButton2Called;
@@ -53,10 +58,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        InputManager.Instance.startAcceleratorPedalAction -= OnAcceleratorPedalStarted;
+        InputManager.Instance.cancelAcceleratorPedalAction -= OnAcceleratorPedalCanceled;
+        InputManager.Instance.startBrakePedalAction -= OnBrakePedalStarted;
+        InputManager.Instance.cancelBrakePedalAction -= OnBrakePedalCanceled;
+        InputManager.Instance.startSwitchPedalAction -= OnSwitchPedalStarted;
+        InputManager.Instance.cancelSwitchPedalAction -= OnSwitchPedalCanceled;
         InputManager.Instance.carSteeringWheelAction -= OnCarSteeringWheelCalled;
-        InputManager.Instance.brakePedalAction -= OnBrakePedalCalled;
-        InputManager.Instance.switchPedalAction -= OnSwitchPedalCalled;
-        InputManager.Instance.acceleratorPedalAction -= OnAcceleratorPedalCalled;
         InputManager.Instance.automaticTransmissionAction -= OnAutomaticTransmissionCalled;
         InputManager.Instance.randomButton1Action -= OnRandomButton1Called;
         InputManager.Instance.randomButton2Action -= OnRandomButton2Called;
@@ -68,20 +76,24 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 joystickValue = InputManager.Instance.AutomaticTransmission;
 
-        if (joystickValue.y > 0.8f && !_joystickIsUsed)
+        if (_isShiftButtonHeld)
         {
-            _joystickIsUsed = true;
-            GearUp();
+            if (joystickValue.y > 0.8f && !_joystickIsUsed)
+            {
+                _joystickIsUsed = true;
+                GearUp();
+            }
+            else if (joystickValue.y < -0.8f && !_joystickIsUsed)
+            {
+                _joystickIsUsed = true;
+                GearDown();
+            }
+            else if (Mathf.Abs(joystickValue.y) < 0.3f)
+            {
+                _joystickIsUsed = false;
+            }
         }
-        else if (joystickValue.y < -0.8f && !_joystickIsUsed)
-        {
-            _joystickIsUsed = true;
-            GearDown();
-        }
-        else if (Mathf.Abs(joystickValue.y) < 0.3f)
-        {
-            _joystickIsUsed = false;
-        }
+        
 
         currentAngle = Mathf.MoveTowards(currentAngle, targetAngle, rotationSpeed * Time.deltaTime);
 
@@ -108,28 +120,49 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Input Methods
-    void OnCarSteeringWheelCalled()
+
+    void OnAcceleratorPedalStarted()
     {
-        Debug.Log("Volant");
+        Debug.Log("Pedal d acceleration appuyé");
+        Accelerator();
     }
 
-    void OnBrakePedalCalled()
+    void OnAcceleratorPedalCanceled()
     {
-        Debug.Log("Pedal break");
+        Debug.Log("Pedal d acceleration relaché");
+        targetSpeed = 0f;
         speedTween?.Kill();
-        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, 1f).SetEase(Ease.InQuad);
+        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, decelerationDuration).SetEase(Ease.OutSine);
+    }
+
+    void OnBrakePedalStarted()
+    {
+        Debug.Log("Pedal break appuyé");
+        speedTween?.Kill();
+        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, brakingDuration).SetEase(Ease.OutQuad);
         targetSpeed = 0f;
     }
 
-    void OnSwitchPedalCalled()
+    void OnBrakePedalCanceled()
     {
-        Debug.Log("Pedal Switch");
+        Debug.Log("Pedal break relaché");
     }
 
-    void OnAcceleratorPedalCalled()
+    void OnSwitchPedalStarted()
     {
-        Debug.Log("Pedal d acceleration");
-        Accelerator();
+        Debug.Log("Pedal Switch Start");
+        _isShiftButtonHeld = true;
+    }
+
+    void OnSwitchPedalCanceled()
+    {
+        Debug.Log("Pedal Switch Canceled");
+        _isShiftButtonHeld = false;
+    }
+
+    void OnCarSteeringWheelCalled()
+    {
+        Debug.Log("Volant");
     }
 
     void OnAutomaticTransmissionCalled()
