@@ -3,7 +3,12 @@ guid: 2b14cc6f8e6d87640bb15af0fc46008b
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: bas_facade2
+    second: {fileID: 2800000, guid: 5c395398d613f734b81c5f29ae49de72, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

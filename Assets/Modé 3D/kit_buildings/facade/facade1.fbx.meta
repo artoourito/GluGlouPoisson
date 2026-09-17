@@ -3,7 +3,12 @@ guid: 453cea248b90ccb47b23600be22b276f
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: thBuildingsCity-97
+    second: {fileID: 2800000, guid: 4e8e9510c3f4a6648acf6df1f9f26d6a, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
