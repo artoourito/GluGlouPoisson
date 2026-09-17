@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public event Action randomButton1Action;
     public event Action randomButton2Action;
     public event Action randomButton3Action;
+    public event Action powerButtonAction;
 
     private InputAction _acceleratorPedalInputAction;
     private InputAction _brakePedalInputAction;
@@ -25,6 +26,7 @@ public class InputManager : MonoBehaviour
     private InputAction _randomButton1InputAction;
     private InputAction _randomButton2InputAction;
     private InputAction _randomButton3InputAction;
+    private InputAction _powerButtonInputAction;
 
     private InputActionMap _vehiculeMap;
 
@@ -56,6 +58,7 @@ public class InputManager : MonoBehaviour
         _randomButton1InputAction = InputSystem.actions.FindAction("RandomButton1");
         _randomButton2InputAction = InputSystem.actions.FindAction("RandomButton2");
         _randomButton3InputAction = InputSystem.actions.FindAction("RandomButton3");
+        _powerButtonInputAction = InputSystem.actions.FindAction("PowerButton");
     }
 
     private void OnEnable()
@@ -70,6 +73,7 @@ public class InputManager : MonoBehaviour
         _randomButton1InputAction.performed += RandomButton1;
         _randomButton2InputAction.performed += RandomButton2;
         _randomButton3InputAction.performed += RandomButton3;
+        _powerButtonInputAction.performed += PowerButton;
     }
 
     private void OnDisable()
@@ -84,6 +88,7 @@ public class InputManager : MonoBehaviour
         _randomButton1InputAction.performed -= RandomButton1;
         _randomButton2InputAction.performed -= RandomButton2;
         _randomButton3InputAction.performed -= RandomButton3;
+        _powerButtonInputAction.performed -= PowerButton;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -146,5 +151,10 @@ public class InputManager : MonoBehaviour
     public void RandomButton3(InputAction.CallbackContext callbackContext)
     {
         randomButton3Action?.Invoke();
+    }
+
+    public void PowerButton(InputAction.CallbackContext callbackContext) 
+    { 
+        powerButtonAction?.Invoke();
     }
 }
