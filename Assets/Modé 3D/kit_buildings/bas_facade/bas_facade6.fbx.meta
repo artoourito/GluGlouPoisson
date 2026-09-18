@@ -5,6 +5,16 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bas_facade6
+    second: {fileID: 2100000, guid: 69a9238e84bb3eb4abe8354b67a9ccd2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bas_facade6windows
+    second: {fileID: 2100000, guid: 9844b2375524bc940b9ad7b6786196f5, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: bas_facade6
