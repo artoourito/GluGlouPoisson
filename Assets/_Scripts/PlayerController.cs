@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     private float _transitionElapsedTime = 0f;
     private bool _isTransitioning = false;
     private AnimationCurve _activeCurve = null;
+
+    private float _bounceTimer = 0f;
     #endregion
 
     #region Built-in Methods
@@ -82,6 +84,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_bounceTimer > 0f)
+        {
+            _bounceTimer -= Time.deltaTime;
+            return;
+        }
+
         if (_isTransitioning)
         {
             _transitionElapsedTime += Time.deltaTime;
@@ -136,8 +144,9 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-        Vector3 moveDelta = transform.forward * moveSpeed * Time.deltaTime;
-        _rb.MovePosition(_rb.position + moveDelta);
+        Vector3 targetVelocity = transform.forward * moveSpeed;
+        targetVelocity.y = _rb.linearVelocity.y;
+        _rb.linearVelocity = targetVelocity;
 
         // rotation des roues
         foreach (Transform wheel in wheels)
@@ -315,6 +324,14 @@ public class PlayerController : MonoBehaviour
         }
 
         StartSpeedTransition(0f, decelerationDuration, null);
+    }
+
+    public void OnBounced()
+    {
+        moveSpeed = 0f;
+        targetSpeed = 0f;
+        _isTransitioning = false;
+        _bounceTimer = 0.3f;
     }
     #endregion
 }
