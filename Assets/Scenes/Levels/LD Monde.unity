@@ -313,6 +313,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 185976206}
     m_Modifications:
+    - target: {fileID: 204269809156778382, guid: 2e7e38743faf226498aeedefe2da45ad, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c741a8ae7fbf38142afed7cb77084d4f, type: 2}
     - target: {fileID: 2220965058996693566, guid: 2e7e38743faf226498aeedefe2da45ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 119.69
@@ -356,6 +360,18 @@ PrefabInstance:
     - target: {fileID: 7151033981505389789, guid: 2e7e38743faf226498aeedefe2da45ad, type: 3}
       propertyPath: m_Name
       value: Carrefour tile (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202085523321920165, guid: 2e7e38743faf226498aeedefe2da45ad, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: c741a8ae7fbf38142afed7cb77084d4f, type: 2}
+    - target: {fileID: 8050934320346348950, guid: 2e7e38743faf226498aeedefe2da45ad, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 21.606583
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050934320346348950, guid: 2e7e38743faf226498aeedefe2da45ad, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5272,6 +5288,10 @@ PrefabInstance:
     - target: {fileID: 5394526290299491696, guid: 701af3cad3b810d438931ab67330f8c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871470227200605101, guid: 701af3cad3b810d438931ab67330f8c2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.244
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
