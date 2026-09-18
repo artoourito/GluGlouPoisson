@@ -627,6 +627,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 405516336568483645, guid: de8699eb2bb2b4a4bb52de15f3233391, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 1818705757850669688, guid: de8699eb2bb2b4a4bb52de15f3233391, type: 3}
       propertyPath: m_Name
       value: Voiture 2 test
