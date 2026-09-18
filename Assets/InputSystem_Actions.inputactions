@@ -1260,6 +1260,17 @@
                     "action": "PowerButton",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c5a3bf28-6f5a-4c56-a76e-a5207f5f7762",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PowerButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
