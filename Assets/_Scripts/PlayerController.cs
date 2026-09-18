@@ -136,7 +136,8 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        Vector3 moveDelta = transform.forward * moveSpeed * Time.deltaTime;
+        _rb.MovePosition(_rb.position + moveDelta);
 
         // rotation des roues
         foreach (Transform wheel in wheels)
