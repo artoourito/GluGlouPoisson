@@ -5,11 +5,38 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Dev/Block out.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Dev/Test missions.unity
     guid: 3a11c697cc1b26b49aa92d57a4908a49
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 1.unity
+    guid: 08eda861c8999fd46be15d9dd7806be4
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 2.unity
+    guid: 75a4459d56283e04aa6eee43c7593d6d
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 3.unity
+    guid: 8dfe52e14099a9d48b12c77a6f46f505
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 4.unity
+    guid: 6baa6800254eeaf469495935e892cdf5
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 5.unity
+    guid: 70fa5cbf0d40d584ea2de1646a9d5502
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 6.unity
+    guid: 2a101999b955cb7449b8865f0183e25a
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 7.unity
+    guid: d02021a71e3e683409a1336bafcf7272
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 9.unity
+    guid: 58f1c063aa1210245bf0710eb2342507
+  - enabled: 1
+    path: Assets/Scenes/Levels/LVL 10.unity
+    guid: a727079d4057b6c45be491412447cc08
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

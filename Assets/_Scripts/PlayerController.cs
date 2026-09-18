@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -33,9 +32,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private List<Transform> wheels = new List<Transform>();
 
     private Rigidbody _rb;
-    private Tween speedTween;
     private bool _joystickIsUsed = false;
     private bool _powerOn = false;
+
+    private float _transitionStartSpeed = 0f;
+    private float _transitionTargetSpeed = 0f;
+    private float _transitionDuration = 1f;
+    private float _transitionElapsedTime = 0f;
+    private bool _isTransitioning = false;
+    private AnimationCurve _activeCurve = null;
     #endregion
 
     #region Built-in Methods
@@ -77,6 +82,27 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isTransitioning)
+        {
+            _transitionElapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(_transitionElapsedTime / _transitionDuration);
+
+            float evaluationFactor = t;
+
+            if (_activeCurve != null)
+            {
+                evaluationFactor = _activeCurve.Evaluate(t);
+            }
+
+            moveSpeed = Mathf.Lerp(_transitionStartSpeed, _transitionTargetSpeed, evaluationFactor);
+            targetSpeed = _transitionTargetSpeed;
+
+            if (t >= 1f)
+            {
+                _isTransitioning = false;
+            }
+        }
+
         if (_powerOn)
         {
             Vector2 joystickValue = InputManager.Instance.AutomaticTransmission;
@@ -110,7 +136,8 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        Vector3 moveDelta = transform.forward * moveSpeed * Time.deltaTime;
+        _rb.MovePosition(_rb.position + moveDelta);
 
         // rotation des roues
         foreach (Transform wheel in wheels)
@@ -136,16 +163,13 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Pedal d acceleration relaché");
         targetSpeed = 0f;
-        speedTween?.Kill();
-        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, decelerationDuration).SetEase(Ease.OutSine);
+        StartSpeedTransition(0f, decelerationDuration, null);
     }
 
     void OnBrakePedalStarted()
     {
         Debug.Log("Pedal break appuyé");
-        speedTween?.Kill();
-        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, brakingDuration).SetEase(Ease.OutQuad);
-        targetSpeed = 0f;
+        StartSpeedTransition(0f, brakingDuration, null);
     }
 
     void OnBrakePedalCanceled()
@@ -199,6 +223,16 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Vehicule Logic Methods
+    private void StartSpeedTransition(float target, float duration, AnimationCurve curve)
+    {
+        _transitionStartSpeed = moveSpeed;
+        _transitionTargetSpeed = target;
+        _transitionDuration = duration;
+        _transitionElapsedTime = 0f;
+        _activeCurve = curve;
+        _isTransitioning = true;
+    }
+
     private void Accelerator()
     {
         if (!_powerOn) return;
@@ -220,9 +254,7 @@ public class PlayerController : MonoBehaviour
 
         targetSpeed = targetGoal;
 
-        speedTween?.Kill();
-
-        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, targetSpeed, accelerationDuration).SetEase(accelerationCurve);
+        StartSpeedTransition(targetGoal, accelerationDuration, accelerationCurve);
     }
 
     private void TurnRight()
@@ -253,9 +285,8 @@ public class PlayerController : MonoBehaviour
 
         if (Mathf.Abs(moveSpeed) > maxAllowedSpeed)
         {
-            speedTween?.Kill();
             float targetGoal = (currentGear == -1) ? -maxReverseSpeed : maxAllowedSpeed;
-            speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, targetGoal, 1f).SetEase(Ease.OutQuad);
+            StartSpeedTransition(targetGoal, 1f, null);
         }
     }
 
@@ -283,9 +314,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("la voiture est éteinte");
         }
 
-        speedTween?.Kill();
-        speedTween = DOTween.To(() => moveSpeed, x => moveSpeed = x, 0f, decelerationDuration).SetEase(Ease.OutSine);
-        targetSpeed = 0f;
+        StartSpeedTransition(0f, decelerationDuration, null);
     }
     #endregion
 }
