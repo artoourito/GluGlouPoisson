@@ -45,7 +45,7 @@ public class FaceMovementDirection : MonoBehaviour
         if (use2DRotation)
         {
             float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-            Quaternion targetRotation2D = Quaternion.Euler(0f, 0f, angle);
+            Quaternion targetRotation2D = Quaternion.Euler(0f, 0f, angle+90);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation2D, rotationSpeed * Time.deltaTime);
         }
         else
