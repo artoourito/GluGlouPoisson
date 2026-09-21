@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 8199f107b3e13d74abf69eace1f0bb78
+guid: e37a40e1391daa4488e105fdfbf42406
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: voiture haut
-    second: {fileID: 2800000, guid: fe3616c729538bd47930aa1b57f55c5d, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
