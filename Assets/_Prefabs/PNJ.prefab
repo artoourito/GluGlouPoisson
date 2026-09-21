@@ -278,7 +278,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomSprite
   possibleSprites:
-  - {fileID: 0}
+  - {fileID: -1074667668689054642, guid: 2816fb1ec98825c44947cba5385b9a37, type: 3}
+  - {fileID: 173802172858786993, guid: 58b425c6d30044840baf38b0865243e2, type: 3}
+  - {fileID: -4177412731531969908, guid: c304891bddf793944adfbce95f64922f, type: 3}
+  - {fileID: -7339116108365364104, guid: ff8a69eb3a83924479385e1fb7205839, type: 3}
+  - {fileID: -5957481767553626923, guid: 4c4dc9f6fac3d324da8a2d796c84a1dc, type: 3}
+  - {fileID: 155529385129523553, guid: 8f95ae8b12f76f24a9cf0b43bea558b3, type: 3}
+  - {fileID: -5333270447306496418, guid: b43b766a9094ec64f8ffc37830f291a2, type: 3}
+  - {fileID: 7813468229453182399, guid: 2b324e2ae6924c54eb91d2101daf70dd, type: 3}
+  - {fileID: -8662994545811897758, guid: 45b97412d2cea104faebf5618f834da5, type: 3}
+  - {fileID: 1523917203484231705, guid: 231473be814dca04685faf1a6756309a, type: 3}
+  - {fileID: 8769401174489991073, guid: 7ac31ae9ea9c4ad48aa40980b8de179f, type: 3}
+  - {fileID: 489113440538515508, guid: b786040f160c22c429d530f1275da01d, type: 3}
+  - {fileID: -8902730706307680209, guid: 0b6987ba8b76d1641937aa4f8ca52e68, type: 3}
   randomizeEveryTimeEnabled: 1
 --- !u!114 &2774537504180596426
 MonoBehaviour:

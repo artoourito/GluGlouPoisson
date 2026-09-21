@@ -140,11 +140,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4697012924371868340}
-  - component: {fileID: 1963860171003021663}
-  - component: {fileID: 1232163239638131293}
   - component: {fileID: 4106637566882637290}
   - component: {fileID: 3331336020519660005}
   - component: {fileID: 2020895331842277823}
+  - component: {fileID: 831149381027723178}
   m_Layer: 0
   m_Name: PNJ car
   m_TagString: Untagged
@@ -167,63 +166,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 153025384525149411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1963860171003021663
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5433550332509656513}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1232163239638131293
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5433550332509656513}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 8801623189628252795, guid: 8199f107b3e13d74abf69eace1f0bb78, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &4106637566882637290
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -282,6 +224,27 @@ MonoBehaviour:
   rotationSpeed: 10
   use2DRotation: 0
   minSpeedThreshold: 0.05
+--- !u!114 &831149381027723178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5433550332509656513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ce6ec52efa776498c821e001b5c487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandomModel
+  possibleModels:
+  - {fileID: 5790623337643984377, guid: b3d0004efe0f74b4196eb2547374db6d, type: 3}
+  - {fileID: 5799431432560668750, guid: 7ada19c3f0dd7134aa6266bd6ff6ee10, type: 3}
+  - {fileID: 8311884338010496086, guid: 1772d0cd547e6c546b5d0a8e91d50404, type: 3}
+  - {fileID: 4309182476250587471, guid: cd668ddec95329346ade32d5fca38c79, type: 3}
+  - {fileID: 5497948203400393922, guid: 3f493385ce166ac4a8d4e7c0b26ed357, type: 3}
+  - {fileID: 7880373612198758481, guid: c3cce7bb95fb4214bacbaf03e560ef86, type: 3}
+  parentToThisObject: 1
+  randomizeEveryTimeEnabled: 1
 --- !u!1 &7457953696883133805
 GameObject:
   m_ObjectHideFlags: 0
