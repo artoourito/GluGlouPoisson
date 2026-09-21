@@ -164,7 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed73546200a52e459388d8f5c183294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomMessageOnTouch
-  randomVoicelines: []
-  displayDuration: 1
+  randomVoicelines:
+  - {fileID: 8300000, guid: bb2ce59d2c891ad4d85570630894ebf9, type: 3}
+  - {fileID: 8300000, guid: cdc922f18deaff34f81292f8a88a0a91, type: 3}
   requiredTag: Player
-  cooldown: 1
+  cooldown: 2

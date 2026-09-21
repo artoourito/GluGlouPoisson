@@ -9396,18 +9396,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomVoiceLine
       objectReference: {fileID: 0}
-    - target: {fileID: 4059381588348343002, guid: a1ca9cef69ff93e4dab6e905d47c1477, type: 3}
-      propertyPath: randomVoicelines.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4059381588348343002, guid: a1ca9cef69ff93e4dab6e905d47c1477, type: 3}
-      propertyPath: 'randomVoicelines.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: bb2ce59d2c891ad4d85570630894ebf9, type: 3}
-    - target: {fileID: 4059381588348343002, guid: a1ca9cef69ff93e4dab6e905d47c1477, type: 3}
-      propertyPath: 'randomVoicelines.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: cdc922f18deaff34f81292f8a88a0a91, type: 3}
     - target: {fileID: 8347056607454588152, guid: a1ca9cef69ff93e4dab6e905d47c1477, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.42

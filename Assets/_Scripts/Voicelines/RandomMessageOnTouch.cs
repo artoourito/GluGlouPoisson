@@ -10,14 +10,11 @@ public class RandomMessageOnTouch : MonoBehaviour
     [Tooltip("Liste des voiceline possibles. Un est choisi au hasard à chaque contact.")]
     [SerializeField] private List<AudioClip> randomVoicelines = new List<AudioClip>();
 
-    [Tooltip("Durée d'affichage, en secondes.")]
-    [SerializeField] private float displayDuration = 1f;
-
     [Tooltip("Tag requis sur l'objet qui déclenche le trigger.")]
     [SerializeField] private string requiredTag = "Player";
 
     [Tooltip("Délai minimum entre deux déclenchements, pour éviter le spam si le joueur reste dans le collider.")]
-    [SerializeField] private float cooldown = 1f;
+    [SerializeField] private float cooldown = 2f;
 
     private bool __hasTriggered = false;
     private AudioSource _audioSource;
@@ -31,7 +28,10 @@ public class RandomMessageOnTouch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        TryTrigger(other.gameObject);
+        if (other.gameObject.CompareTag(requiredTag))
+        {
+            TryTrigger(other.gameObject);
+        }
     }
     #endregion
 
