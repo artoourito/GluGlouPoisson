@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 3331336020519660005}
   - component: {fileID: 2020895331842277823}
   - component: {fileID: 831149381027723178}
+  - component: {fileID: 3268065420516858252}
   m_Layer: 0
   m_Name: PNJ car
   m_TagString: Untagged
@@ -224,6 +225,7 @@ MonoBehaviour:
   rotationSpeed: 10
   use2DRotation: 0
   minSpeedThreshold: 0.05
+  rotationOffset: 0
 --- !u!114 &831149381027723178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +247,21 @@ MonoBehaviour:
   - {fileID: 7880373612198758481, guid: c3cce7bb95fb4214bacbaf03e560ef86, type: 3}
   parentToThisObject: 1
   randomizeEveryTimeEnabled: 1
+--- !u!114 &3268065420516858252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5433550332509656513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fe82751906c9448972ec9857b1cc4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BounceBack
+  bounceMultiplier: 2
+  minBounceSpeed: 3
+  requiredTag: Player
 --- !u!1 &7457953696883133805
 GameObject:
   m_ObjectHideFlags: 0
