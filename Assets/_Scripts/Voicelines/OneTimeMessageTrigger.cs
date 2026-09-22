@@ -1,19 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// Affiche un message texte une seule fois lorsque le joueur touche cet objet
-/// (ex: une boîte spécifique). Ne se redéclenche plus ensuite, même si le
-/// joueur touche à nouveau la boîte.
-///
-/// MISE EN PLACE :
-/// 1. Attachez ce script à votre boîte, qui doit avoir un Collider (2D ou 3D)
-///    avec "Is Trigger" coché.
-/// 2. Assurez-vous qu'un GameObject avec le script MessageDisplay existe dans la scène.
-/// 3. Renseignez le texte à afficher dans "message".
-/// 4. Le joueur doit avoir le Tag renseigné dans "requiredTag" (par défaut "Player").
-/// </summary>
-
+[RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(AudioSource))]
 
 public class OneTimeMessageTrigger : MonoBehaviour
