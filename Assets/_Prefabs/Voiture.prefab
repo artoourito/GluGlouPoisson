@@ -341,7 +341,7 @@ MonoBehaviour:
   maxGear: 1
   maxReverseSpeed: 10
   maxGear0Speed: 5
-  maxGear1Speed: 25
+  maxGear1Speed: 15
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
