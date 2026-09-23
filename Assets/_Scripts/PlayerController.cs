@@ -232,6 +232,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Vehicule Logic Methods
+    public void SetSteeringInput(float rawAngle)
+    {
+        // On bride l'angle reçu entre -maxAngle et maxAngle pour éviter que les roues partent en vrille
+        targetAngle = Mathf.Clamp(rawAngle, -maxAngle, maxAngle);
+    }
     private void StartSpeedTransition(float target, float duration, AnimationCurve curve)
     {
         _transitionStartSpeed = moveSpeed;

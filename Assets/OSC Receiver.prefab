@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3988270874800833058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1703395130952963802}
+  - component: {fileID: 4776663949080518580}
+  - component: {fileID: 4797581599726916485}
+  - component: {fileID: 5332403159559061728}
+  m_Layer: 0
+  m_Name: OSC Receiver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1703395130952963802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988270874800833058}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4776663949080518580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988270874800833058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c0c9b3c38bc1b4fa58434e762579eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Media.Osc.Components::Unity.Media.Osc.OscNetworkReceiver
+  m_Protocol: 0
+  m_Port: 8000
+  m_ReceiveMulticast: 0
+  m_MulticastAddress: 192.168.1.255
+  m_MulticastLoopback: 0
+  m_StreamType: 1
+--- !u!114 &4797581599726916485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988270874800833058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5b9979067d335d47a65133b882b31ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Media.Osc.Components::Unity.Media.Osc.OscMessageHandler
+  m_Receiver: {fileID: 4776663949080518580}
+  m_Address: /encoder
+  m_Arguments:
+  - rid: 7188708707656794325
+  references:
+    version: 2
+    RefIds:
+    - rid: 7188708707656794325
+      type: {class: ArgumentHandlerFloat, ns: Unity.Media.Osc, asm: Unity.Media.Osc.Components}
+      data:
+        m_Event:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 5332403159559061728}
+              m_TargetAssemblyTypeName: osc, Assembly-CSharp
+              m_MethodName: ReceiveOSC
+              m_Mode: 0
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 1
+--- !u!114 &5332403159559061728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988270874800833058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc7619d2b7ab404ab275a6330305101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  playerController: {fileID: 0}
