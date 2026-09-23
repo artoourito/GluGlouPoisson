@@ -1211,10 +1211,6 @@ PrefabInstance:
       value: Voiture
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.65
       objectReference: {fileID: 0}
@@ -1253,30 +1249,6 @@ PrefabInstance:
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: maxGear0Speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: accelerationDuration
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[0].inSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[1].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[0].outSlope
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[1].outSlope
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1670,13 +1642,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1778953883842139756, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1855491396}
   m_SourcePrefab: {fileID: 100100000, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
 --- !u!4 &1835574006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5237306103645799955, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
   m_PrefabInstance: {fileID: 1835574005}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1855491390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1778953883842139756, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+  m_PrefabInstance: {fileID: 1835574005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1855491396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855491390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7e6eead693fc541b148f8c0c9a5852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NamePromptTrigger
+  namePromptPanel: {fileID: 0}
+  requiredTag: 
 --- !u!1001 &1890880008
 PrefabInstance:
   m_ObjectHideFlags: 0
