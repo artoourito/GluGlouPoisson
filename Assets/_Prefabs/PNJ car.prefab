@@ -227,7 +227,7 @@ MonoBehaviour:
   rotationSpeed: 10
   use2DRotation: 0
   minSpeedThreshold: 0.05
-  rotationOffset: 0
+  rotationOffset: 180
 --- !u!114 &831149381027723178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +247,13 @@ MonoBehaviour:
   - {fileID: 4309182476250587471, guid: cd668ddec95329346ade32d5fca38c79, type: 3}
   - {fileID: 5497948203400393922, guid: 3f493385ce166ac4a8d4e7c0b26ed357, type: 3}
   - {fileID: 7880373612198758481, guid: c3cce7bb95fb4214bacbaf03e560ef86, type: 3}
+  - {fileID: 919132149155446097, guid: 1b0868ce835583f478f8357d46650507, type: 3}
+  - {fileID: 919132149155446097, guid: ba292adc915416e43a9647cb6e2d8768, type: 3}
+  - {fileID: 919132149155446097, guid: 40bfa6a6cf900004aba5e5ad3932ef2f, type: 3}
+  - {fileID: 919132149155446097, guid: de00b474875f0e04587ca722b0079c80, type: 3}
+  - {fileID: 919132149155446097, guid: 96a875af5f899574db79234e59a06bfe, type: 3}
+  - {fileID: 919132149155446097, guid: 4a2217195045c1f458cf849b4cab8db9, type: 3}
+  - {fileID: 919132149155446097, guid: 247306c5519b9db4ba336088964360ed, type: 3}
   parentToThisObject: 1
   randomizeEveryTimeEnabled: 1
 --- !u!114 &3268065420516858252
