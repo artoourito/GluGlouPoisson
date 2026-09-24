@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private string discoSoundId;
     [SerializeField] private string honkSoundId;
+    [SerializeField] private string warningsSoundId;
 
     [SerializeField]
     private List<Transform> wheels =
@@ -63,111 +64,69 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     #region Built-in Methods
 
     private void Start()
     {
-        InputManager.Instance.startAcceleratorPedalAction +=
-            OnAcceleratorPedalStarted;
+        InputManager.Instance.startAcceleratorPedalAction += OnAcceleratorPedalStarted;
+        InputManager.Instance.cancelAcceleratorPedalAction += OnAcceleratorPedalCanceled;
 
-        InputManager.Instance.cancelAcceleratorPedalAction +=
-            OnAcceleratorPedalCanceled;
+        InputManager.Instance.startBrakePedalAction += OnBrakePedalStarted;
+        InputManager.Instance.cancelBrakePedalAction += OnBrakePedalCanceled;
 
-        InputManager.Instance.startBrakePedalAction +=
-            OnBrakePedalStarted;
+        InputManager.Instance.startSwitchPedalAction += OnSwitchPedalStarted;
+        InputManager.Instance.cancelSwitchPedalAction += OnSwitchPedalCanceled;
 
-        InputManager.Instance.cancelBrakePedalAction +=
-            OnBrakePedalCanceled;
+        InputManager.Instance.carSteeringWheelAction += OnCarSteeringWheelCalled;
+        InputManager.Instance.automaticTransmissionAction += OnAutomaticTransmissionCalled;
 
-        InputManager.Instance.startSwitchPedalAction +=
-            OnSwitchPedalStarted;
+        // RANDOM BUTTON 1 = KLAXON
+        InputManager.Instance.randomButton1Action += OnRandomButton1Called;
+        InputManager.Instance.randomButton1CanceledAction += OnRandomButton1Canceled;
 
-        InputManager.Instance.cancelSwitchPedalAction +=
-            OnSwitchPedalCanceled;
+        // RANDOM BUTTON 2 = WARNINGS
+        InputManager.Instance.randomButton2Action += OnRandomButton2Called;
 
-        InputManager.Instance.carSteeringWheelAction +=
-            OnCarSteeringWheelCalled;
+        // RANDOM BUTTON 3 = DISCO
+        InputManager.Instance.randomButton3Action += OnRandomButton3Called;
 
-        InputManager.Instance.automaticTransmissionAction +=
-            OnAutomaticTransmissionCalled;
+        InputManager.Instance.powerButtonAction += OnPowerButtonCalled;
 
-        InputManager.Instance.randomButton1Action +=
-            OnRandomButton1Called;
-
-        InputManager.Instance.randomButton1CanceledAction +=
-            OnRandomButton1Canceled;
-
-        InputManager.Instance.randomButton2Action +=
-            OnRandomButton2Called;
-
-        InputManager.Instance.randomButton3Action +=
-            OnRandomButton3Called;
-
-        InputManager.Instance.powerButtonAction +=
-            OnPowerButtonCalled;
-
-        InputManager.Instance.gearUpAction +=
-            GearUp;
-
-        InputManager.Instance.gearDownAction +=
-            GearDown;
+        InputManager.Instance.gearUpAction += GearUp;
+        InputManager.Instance.gearDownAction += GearDown;
 
         _rb = GetComponent<Rigidbody>();
     }
-
 
     private void OnDisable()
     {
         if (InputManager.Instance == null)
             return;
 
-        InputManager.Instance.startAcceleratorPedalAction -=
-            OnAcceleratorPedalStarted;
+        InputManager.Instance.startAcceleratorPedalAction -= OnAcceleratorPedalStarted;
+        InputManager.Instance.cancelAcceleratorPedalAction -= OnAcceleratorPedalCanceled;
 
-        InputManager.Instance.cancelAcceleratorPedalAction -=
-            OnAcceleratorPedalCanceled;
+        InputManager.Instance.startBrakePedalAction -= OnBrakePedalStarted;
+        InputManager.Instance.cancelBrakePedalAction -= OnBrakePedalCanceled;
 
-        InputManager.Instance.startBrakePedalAction -=
-            OnBrakePedalStarted;
+        InputManager.Instance.startSwitchPedalAction -= OnSwitchPedalStarted;
+        InputManager.Instance.cancelSwitchPedalAction -= OnSwitchPedalCanceled;
 
-        InputManager.Instance.cancelBrakePedalAction -=
-            OnBrakePedalCanceled;
+        InputManager.Instance.carSteeringWheelAction -= OnCarSteeringWheelCalled;
+        InputManager.Instance.automaticTransmissionAction -= OnAutomaticTransmissionCalled;
 
-        InputManager.Instance.startSwitchPedalAction -=
-            OnSwitchPedalStarted;
+        InputManager.Instance.randomButton1Action -= OnRandomButton1Called;
+        InputManager.Instance.randomButton1CanceledAction -= OnRandomButton1Canceled;
 
-        InputManager.Instance.cancelSwitchPedalAction -=
-            OnSwitchPedalCanceled;
+        InputManager.Instance.randomButton2Action -= OnRandomButton2Called;
 
-        InputManager.Instance.carSteeringWheelAction -=
-            OnCarSteeringWheelCalled;
+        InputManager.Instance.randomButton3Action -= OnRandomButton3Called;
 
-        InputManager.Instance.automaticTransmissionAction -=
-            OnAutomaticTransmissionCalled;
+        InputManager.Instance.powerButtonAction -= OnPowerButtonCalled;
 
-        InputManager.Instance.randomButton1Action -=
-            OnRandomButton1Called;
-
-        InputManager.Instance.randomButton1CanceledAction -=
-            OnRandomButton1Canceled;
-
-        InputManager.Instance.randomButton2Action -=
-            OnRandomButton2Called;
-
-        InputManager.Instance.randomButton3Action -=
-            OnRandomButton3Called;
-
-        InputManager.Instance.powerButtonAction -=
-            OnPowerButtonCalled;
-
-        InputManager.Instance.gearUpAction -=
-            GearUp;
-
-        InputManager.Instance.gearDownAction -=
-            GearDown;
+        InputManager.Instance.gearUpAction -= GearUp;
+        InputManager.Instance.gearDownAction -= GearDown;
     }
-
 
     private void Update()
     {
@@ -177,52 +136,36 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-
-        // Speed transition
-
         if (_isTransitioning)
         {
             _transitionElapsedTime += Time.deltaTime;
 
-            float t =
-                Mathf.Clamp01(
-                    _transitionElapsedTime /
-                    _transitionDuration
-                );
+            float t = Mathf.Clamp01(
+                _transitionElapsedTime / _transitionDuration
+            );
 
             float evaluationFactor = t;
 
             if (_activeCurve != null)
-            {
-                evaluationFactor =
-                    _activeCurve.Evaluate(t);
-            }
+                evaluationFactor = _activeCurve.Evaluate(t);
 
-            moveSpeed =
-                Mathf.Lerp(
-                    _transitionStartSpeed,
-                    _transitionTargetSpeed,
-                    evaluationFactor
-                );
+            moveSpeed = Mathf.Lerp(
+                _transitionStartSpeed,
+                _transitionTargetSpeed,
+                evaluationFactor
+            );
 
             targetSpeed = _transitionTargetSpeed;
 
             if (t >= 1f)
-            {
                 _isTransitioning = false;
-            }
         }
 
-
-        // Steering
-
-        currentAngle =
-            Mathf.MoveTowards(
-                currentAngle,
-                targetAngle,
-                rotationSpeed * Time.deltaTime
-            );
-
+        currentAngle = Mathf.MoveTowards(
+            currentAngle,
+            targetAngle,
+            rotationSpeed * Time.deltaTime
+        );
 
         if (Mathf.Abs(moveSpeed) > 0.1f)
         {
@@ -239,9 +182,6 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-
-        // Rigidbody
-
         Vector3 targetVelocity =
             transform.forward * moveSpeed;
 
@@ -250,9 +190,6 @@ public class PlayerController : MonoBehaviour
 
         _rb.linearVelocity =
             targetVelocity;
-
-
-        // Wheels
 
         foreach (Transform wheel in wheels)
         {
@@ -269,16 +206,13 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-
     #region Input Methods
 
     private void OnAcceleratorPedalStarted()
     {
         Debug.Log("Pedal d'acceleration appuyé");
-
         Accelerator();
     }
-
 
     private void OnAcceleratorPedalCanceled()
     {
@@ -293,7 +227,6 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-
     private void OnBrakePedalStarted()
     {
         Debug.Log("Pedal brake appuyé");
@@ -305,39 +238,32 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-
     private void OnBrakePedalCanceled()
     {
         Debug.Log("Pedal brake relâché");
     }
-
 
     private void OnSwitchPedalStarted()
     {
         Debug.Log("Pedal Switch Start");
     }
 
-
     private void OnSwitchPedalCanceled()
     {
         Debug.Log("Pedal Switch Canceled");
     }
-
 
     private void OnCarSteeringWheelCalled()
     {
         Debug.Log("Volant");
     }
 
-
     private void OnAutomaticTransmissionCalled()
     {
         Debug.Log("Boite auto");
     }
 
-
     // RANDOM BUTTON 1 = KLAXON
-
     private void OnRandomButton1Called()
     {
         Debug.Log("Klaxon");
@@ -347,7 +273,6 @@ public class PlayerController : MonoBehaviour
             SoundManager.Instance.PlayLoop(honkSoundId);
         }
     }
-
 
     private void OnRandomButton1Canceled()
     {
@@ -359,17 +284,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     // RANDOM BUTTON 2 = WARNINGS
-
     private void OnRandomButton2Called()
     {
         Debug.Log("Warnings");
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.Play(warningsSoundId);
+        }
     }
 
-
     // RANDOM BUTTON 3 = DISCO
-
     private void OnRandomButton3Called()
     {
         Debug.Log("Disco");
@@ -380,14 +306,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void OnPowerButtonCalled()
     {
         Power();
     }
 
     #endregion
-
 
     #region Vehicle Logic
 
@@ -407,7 +331,6 @@ public class PlayerController : MonoBehaviour
             );
     }
 
-
     private void StartSpeedTransition(
         float target,
         float duration,
@@ -420,7 +343,6 @@ public class PlayerController : MonoBehaviour
         _activeCurve = curve;
         _isTransitioning = true;
     }
-
 
     private void Accelerator()
     {
@@ -453,7 +375,6 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-
     private void GearUp()
     {
         int previousGear = currentGear;
@@ -472,11 +393,8 @@ public class PlayerController : MonoBehaviour
         );
 
         if (currentGear != previousGear)
-        {
             UpdateSpeedLimit();
-        }
     }
-
 
     private void GearDown()
     {
@@ -496,11 +414,8 @@ public class PlayerController : MonoBehaviour
         );
 
         if (currentGear != previousGear)
-        {
             UpdateSpeedLimit();
-        }
     }
-
 
     private void UpdateSpeedLimit()
     {
@@ -523,7 +438,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private float GetMaxSpeedForCurrentGear()
     {
         switch (currentGear)
@@ -542,19 +456,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     private void Power()
     {
         _powerOn = !_powerOn;
 
         if (_powerOn)
-        {
             Debug.Log("La voiture est allumée");
-        }
         else
-        {
             Debug.Log("La voiture est éteinte");
-        }
 
         StartSpeedTransition(
             0f,
@@ -562,7 +471,6 @@ public class PlayerController : MonoBehaviour
             null
         );
     }
-
 
     public void OnBounced()
     {
