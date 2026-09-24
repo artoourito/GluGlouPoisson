@@ -30,17 +30,16 @@ public class PlayerController : MonoBehaviour
         get { return currentGear; }
     }
 
-
     [SerializeField] private float maxReverseSpeed = 10f;
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
 
-    // Communication avec l'UI
+    [Header("Continuous Button Sound")]
+    [SerializeField] private string continuousButtonSoundId;
+
     [SerializeField]
     private AnimationCurve accelerationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
-
-    private bool _isShiftButtonHeld;
 
     [SerializeField]
     private List<Transform> wheels =
@@ -101,6 +100,9 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton3Action +=
             OnRandomButton3Called;
 
+        InputManager.Instance.randomButton3CanceledAction +=
+            OnRandomButton3Canceled;
+
         InputManager.Instance.powerButtonAction +=
             OnPowerButtonCalled;
 
@@ -151,6 +153,9 @@ public class PlayerController : MonoBehaviour
 
         InputManager.Instance.randomButton3Action -=
             OnRandomButton3Called;
+
+        InputManager.Instance.randomButton3CanceledAction -=
+            OnRandomButton3Canceled;
 
         InputManager.Instance.powerButtonAction -=
             OnPowerButtonCalled;
@@ -205,7 +210,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
         // Steering
         currentAngle =
             Mathf.MoveTowards(
@@ -213,7 +217,6 @@ public class PlayerController : MonoBehaviour
                 targetAngle,
                 rotationSpeed * Time.deltaTime
             );
-
 
         if (Mathf.Abs(moveSpeed) > 0.1f)
         {
@@ -230,7 +233,6 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-
         // Rigidbody
         Vector3 targetVelocity =
             transform.forward * moveSpeed;
@@ -240,7 +242,6 @@ public class PlayerController : MonoBehaviour
 
         _rb.linearVelocity =
             targetVelocity;
-
 
         // Wheels
         foreach (Transform wheel in wheels)
@@ -263,7 +264,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAcceleratorPedalStarted()
     {
-        Debug.Log("Pedal d'acceleration appuy�");
+        Debug.Log("Pedal d'acceleration appuyé");
 
         Accelerator();
     }
@@ -271,7 +272,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAcceleratorPedalCanceled()
     {
-        Debug.Log("Pedal d'acceleration relach�");
+        Debug.Log("Pedal d'acceleration relâché");
 
         targetSpeed = 0f;
 
@@ -285,7 +286,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnBrakePedalStarted()
     {
-        Debug.Log("Pedal brake appuy�");
+        Debug.Log("Pedal brake appuyé");
 
         StartSpeedTransition(
             0f,
@@ -297,23 +298,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnBrakePedalCanceled()
     {
-        Debug.Log("Pedal brake relach�");
+        Debug.Log("Pedal brake relâché");
     }
 
 
     private void OnSwitchPedalStarted()
     {
         Debug.Log("Pedal Switch Start");
-
-        _isShiftButtonHeld = true;
     }
 
 
     private void OnSwitchPedalCanceled()
     {
         Debug.Log("Pedal Switch Canceled");
-
-        _isShiftButtonHeld = false;
     }
 
 
@@ -331,23 +328,41 @@ public class PlayerController : MonoBehaviour
 
     private void OnRandomButton1Called()
     {
-        Debug.Log("Warnings");
+        // RandomButton1 now uses the old RandomButton2 effect.
+        Debug.Log("Disco");
     }
 
 
     private void OnRandomButton2Called()
     {
-        Debug.Log("Disco");
-
-        TurnRight();
+        // RandomButton2 now uses the old RandomButton1 effect.
+        Debug.Log("Warnings");
     }
 
 
     private void OnRandomButton3Called()
     {
-        Debug.Log("Bouton random 3");
+        // RandomButton3 now plays a sound continuously.
+        Debug.Log("Continuous sound START");
 
-        TurnLeft();
+        if (SoundManager.Instance != null &&
+            !string.IsNullOrEmpty(continuousButtonSoundId))
+        {
+            SoundManager.Instance.PlayLoop(
+                continuousButtonSoundId
+            );
+        }
+    }
+
+
+    private void OnRandomButton3Canceled()
+    {
+        Debug.Log("Continuous sound STOP");
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopLoop();
+        }
     }
 
 
@@ -363,7 +378,6 @@ public class PlayerController : MonoBehaviour
 
     public void SetSteeringInput(float rawAngle)
     {
-        // LVL 7: steering is inverted.
         if (InputManager.Instance != null &&
             InputManager.Instance.SteeringInverted)
         {
@@ -425,33 +439,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void TurnRight()
-    {
-        targetAngle =
-            Mathf.Clamp(
-                targetAngle + angleStep,
-                -maxAngle,
-                maxAngle
-            );
-    }
-
-
-    private void TurnLeft()
-    {
-        targetAngle =
-            Mathf.Clamp(
-                targetAngle - angleStep,
-                -maxAngle,
-                maxAngle
-            );
-    }
-
-
     private void GearUp()
     {
-        if (!_isShiftButtonHeld)
-            return;
-
         int previousGear = currentGear;
 
         currentGear =
@@ -469,11 +458,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentGear != previousGear)
         {
-            Debug.Log(
-                "Gear Up: " +
-                currentGear
-            );
-
             UpdateSpeedLimit();
         }
     }
@@ -481,9 +465,6 @@ public class PlayerController : MonoBehaviour
 
     private void GearDown()
     {
-        if (!_isShiftButtonHeld)
-            return;
-
         int previousGear = currentGear;
 
         currentGear =
@@ -501,11 +482,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentGear != previousGear)
         {
-            Debug.Log(
-                "Gear Down: " +
-                currentGear
-            );
-
             UpdateSpeedLimit();
         }
     }
@@ -558,11 +534,11 @@ public class PlayerController : MonoBehaviour
 
         if (_powerOn)
         {
-            Debug.Log("La voiture est allum�e");
+            Debug.Log("La voiture est allumée");
         }
         else
         {
-            Debug.Log("La voiture est �teinte");
+            Debug.Log("La voiture est éteinte");
         }
 
         StartSpeedTransition(
