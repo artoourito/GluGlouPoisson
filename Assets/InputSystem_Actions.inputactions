@@ -1318,6 +1318,17 @@
                 },
                 {
                     "name": "",
+                    "id": "fd3e7727-6c0f-498d-be90-a5303fbbda99",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RandomButton3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f8773462-dff8-466d-9862-97f22c4fe08e",
                     "path": "<Gamepad>/select",
                     "interactions": "",
