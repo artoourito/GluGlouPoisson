@@ -49,10 +49,7 @@ public class SceneFadeTransition : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning(
-                "[SceneFadeTransition] Aucune 'fadeImage' assignée. " +
-                "Le fondu ne sera pas visible."
-            );
+            Debug.LogWarning("[SceneFadeTransition] Aucune 'fadeImage' assignée. Le fondu ne sera pas visible.");
         }
     }
 
@@ -213,51 +210,26 @@ public class SceneFadeTransition : MonoBehaviour
             );
         }
 
+        // 1. On récupère le score accumulé jusqu'ici (0 par défaut)
 
-        // =========================================================
-        // CHARGEMENT DU SCORE AVEC TEMPS RESTANT
-        // =========================================================
-
-        int currentTotal =
-            PlayerPrefs.GetInt(
-                "CurrentGameScore",
-                0
-            );
-
+        // 2. On définit les points de base du niveau
         int scoreBaseNiveau = 10;
 
+        // 3. On va chercher le temps restant dans le GameManager (s'il existe)
         float tempsRestant = 0f;
-
         if (GameManager.Instance != null)
         {
-            tempsRestant =
-                GameManager.Instance.Timer;
+            tempsRestant = GameManager.Instance.Timer;
         }
 
-        int pointsTemps =
-            Mathf.RoundToInt(
-                tempsRestant
-            );
-
+        int scoreGagnePourCeNiveau = scoreBaseNiveau + pointsTemps;
         int scoreGagnePourCeNiveau =
-            scoreBaseNiveau +
-            pointsTemps;
 
-        currentTotal +=
-            scoreGagnePourCeNiveau;
-
-        PlayerPrefs.SetInt(
-            "CurrentGameScore",
-            currentTotal
-        );
-
+        // 5. On sauvegarde pour la suite
+        PlayerPrefs.SetInt("CurrentGameScore", currentTotal);
         PlayerPrefs.Save();
 
-
-        // =========================================================
         // CHARGEMENT DE LA NOUVELLE SCÈNE
-        // =========================================================
-
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
             SceneManager.LoadScene(
@@ -273,4 +245,3 @@ public class SceneFadeTransition : MonoBehaviour
         }
     }
 }
-

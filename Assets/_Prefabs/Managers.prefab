@@ -631,9 +631,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7642245d2a230d24b99631a55e827501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  timer: 0
-  maxTimer: 60
-  gameoverSound: {fileID: 0}
+  levelDuration: 300
+  timerText: {fileID: 0}
+  gameOverSceneName: Menu
+  delayBeforeSceneLoad: 1
+  scoreBaseNiveau: 50
 --- !u!82 &6313424430263428939
 AudioSource:
   m_ObjectHideFlags: 0
