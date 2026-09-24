@@ -7,14 +7,8 @@ using UnityEngine.UI;
 /// Fait fondre l'écran au noir puis charge une nouvelle scène
 /// lorsqu'un objet (ex: le joueur) entre en collision avec ce trigger.
 ///
-/// MISE EN PLACE :
-/// 1. Attachez ce script à un GameObject possédant un Collider (2D ou 3D)
-///    avec "Is Trigger" coché.
-/// 2. Créez un Canvas avec une Image plein écran noire, opacité initiale à 0,
-///    et assignez-la au champ "fadeImage" ci-dessous.
-/// 3. Renseignez le nom de la scène cible dans "sceneToLoad".
-/// 4. Assurez-vous que l'objet qui déclenche le trigger a le bon Tag
-///    (par défaut "Player") ou ajustez la vérification dans le code.
+/// Détruit également tous les NPC cars et car generators présents
+/// dans la scène lorsque le joueur déclenche la transition.
 /// </summary>
 public class SceneFadeTransition : MonoBehaviour
 {
@@ -26,18 +20,24 @@ public class SceneFadeTransition : MonoBehaviour
     [SerializeField] private float fadeDuration = 1.5f;
 
     [Header("Réglages de la scène")]
-    [Tooltip("Nom exact de la scène à charger (doit être ajoutée aux Build Settings).")]
+    [Tooltip("Nom exact de la scène à charger.")]
     [SerializeField] private string sceneToLoad;
 
     [Header("Filtrage du déclencheur")]
-    [Tooltip("Tag requis sur l'objet qui déclenche le trigger. Laisser vide pour accepter n'importe quel objet.")]
+    [Tooltip("Tag requis sur l'objet qui déclenche le trigger.")]
     [SerializeField] private string requiredTag = "Player";
+
+    [Header("Objets à supprimer")]
+    [Tooltip("Tag utilisé par les voitures NPC.")]
+    [SerializeField] private string npcCarTag = "NPCCar";
+
+    [Tooltip("Tag utilisé par les générateurs de voitures.")]
+    [SerializeField] private string carGeneratorTag = "CarGenerator";
 
     private bool isTransitioning = false;
 
     private void Awake()
     {
-        // Sécurité : s'assurer que l'image de fondu est bien invisible au démarrage
         if (fadeImage != null)
         {
             Color c = fadeImage.color;
@@ -47,11 +47,12 @@ public class SceneFadeTransition : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[SceneFadeTransition] Aucune 'fadeImage' assignée. Le fondu ne sera pas visible.");
+            Debug.LogWarning(
+                "[SceneFadeTransition] Aucune 'fadeImage' assignée. " +
+                "Le fondu ne sera pas visible."
+            );
         }
     }
-
-    // Utilisez celle qui correspond à votre projet (2D ou 3D) et supprimez l'autre.
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,13 +66,59 @@ public class SceneFadeTransition : MonoBehaviour
 
     private void TryStartTransition(GameObject other)
     {
-        if (isTransitioning) return;
-
-        if (!string.IsNullOrEmpty(requiredTag) && !other.CompareTag(requiredTag))
+        if (isTransitioning)
             return;
 
+        if (!string.IsNullOrEmpty(requiredTag) &&
+            !other.CompareTag(requiredTag))
+        {
+            return;
+        }
+
         isTransitioning = true;
+
+        // Supprime les NPC cars et les générateurs
+        DeleteNPCCarsAndGenerators();
+
         StartCoroutine(FadeAndLoadScene());
+    }
+
+    private void DeleteNPCCarsAndGenerators()
+    {
+        // --- NPC CARS ---
+        GameObject[] npcCars = GameObject.FindGameObjectsWithTag(npcCarTag);
+
+        foreach (GameObject npcCar in npcCars)
+        {
+            if (npcCar != null)
+            {
+                Destroy(npcCar);
+            }
+        }
+
+        Debug.Log(
+            "[SceneFadeTransition] " +
+            npcCars.Length +
+            " NPC car(s) supprimé(s)."
+        );
+
+        // --- CAR GENERATORS ---
+        GameObject[] carGenerators =
+            GameObject.FindGameObjectsWithTag(carGeneratorTag);
+
+        foreach (GameObject generator in carGenerators)
+        {
+            if (generator != null)
+            {
+                Destroy(generator);
+            }
+        }
+
+        Debug.Log(
+            "[SceneFadeTransition] " +
+            carGenerators.Length +
+            " car generator(s) supprimé(s)."
+        );
     }
 
     private IEnumerator FadeAndLoadScene()
@@ -85,8 +132,13 @@ public class SceneFadeTransition : MonoBehaviour
             while (elapsed < fadeDuration)
             {
                 elapsed += Time.deltaTime;
-                c.a = Mathf.Clamp01(elapsed / fadeDuration);
+
+                c.a = Mathf.Clamp01(
+                    elapsed / fadeDuration
+                );
+
                 fadeImage.color = c;
+
                 yield return null;
             }
 
@@ -95,43 +147,55 @@ public class SceneFadeTransition : MonoBehaviour
         }
         else
         {
-            // Pas d'image de fondu : on attend quand même la durée pour garder le timing
             yield return new WaitForSeconds(fadeDuration);
         }
 
         // --- CHARGEMENT DU SCORE AVEC TEMPS RESTANT ---
-        // 1. On récupère le score accumulé jusqu'ici (0 par défaut)
-        int currentTotal = PlayerPrefs.GetInt("CurrentGameScore", 0);
 
-        // 2. On définit les points de base du niveau
+        int currentTotal =
+            PlayerPrefs.GetInt(
+                "CurrentGameScore",
+                0
+            );
+
         int scoreBaseNiveau = 10;
 
-        // 3. On va chercher le temps restant dans le GameManager (s'il existe)
         float tempsRestant = 0f;
+
         if (GameManager.Instance != null)
         {
-            tempsRestant = GameManager.Instance.Timer;
+            tempsRestant =
+                GameManager.Instance.Timer;
         }
 
-        // 4. On convertit le temps en points entiers (arrondi) et on ajoute le tout
-        int pointsTemps = Mathf.RoundToInt(tempsRestant);
-        int scoreGagnePourCeNiveau = scoreBaseNiveau + pointsTemps;
+        int pointsTemps =
+            Mathf.RoundToInt(tempsRestant);
 
-        // On l'ajoute au total de la partie
-        currentTotal += scoreGagnePourCeNiveau;
+        int scoreGagnePourCeNiveau =
+            scoreBaseNiveau + pointsTemps;
 
-        // 5. On sauvegarde pour la suite
-        PlayerPrefs.SetInt("CurrentGameScore", currentTotal);
+        currentTotal +=
+            scoreGagnePourCeNiveau;
+
+        PlayerPrefs.SetInt(
+            "CurrentGameScore",
+            currentTotal
+        );
+
         PlayerPrefs.Save();
 
-        // --- Chargement de la nouvelle scène ---
+        // --- CHARGEMENT DE LA NOUVELLE SCÈNE ---
+
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
             SceneManager.LoadScene(sceneToLoad);
         }
         else
         {
-            Debug.LogError("[SceneFadeTransition] 'sceneToLoad' n'est pas renseigné.");
+            Debug.LogError(
+                "[SceneFadeTransition] " +
+                "'sceneToLoad' n'est pas renseigné."
+            );
         }
     }
 }
