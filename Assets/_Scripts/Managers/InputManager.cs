@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
 
     public event Action powerButtonAction;
 
+
     public event Action gearUpAction;
     public event Action gearDownAction;
 
@@ -87,7 +88,6 @@ public class InputManager : MonoBehaviour
         _automaticTransmissionInputAction.ReadValue<Vector2>();
 
     #endregion
-
 
     #region Built-in Methods
 
@@ -221,6 +221,7 @@ public class InputManager : MonoBehaviour
     {
         HandleSwappedInputs();
         HandleGearJoystick();
+
     }
 
     #endregion
