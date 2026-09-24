@@ -11,7 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9be05c15-38af-44c0-a059-5be1206f6794" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GluGlouPoisson/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GluGlouPoisson/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/SceneFadeTransition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/SceneFadeTransition.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

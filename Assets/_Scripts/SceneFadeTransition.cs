@@ -104,7 +104,7 @@ public class SceneFadeTransition : MonoBehaviour
         int currentTotal = PlayerPrefs.GetInt("CurrentGameScore", 0);
 
         // 2. On définit les points de base du niveau
-        int scoreBaseNiveau = 500;
+        int scoreBaseNiveau = 10;
 
         // 3. On va chercher le temps restant dans le GameManager (s'il existe)
         float tempsRestant = 0f;
