@@ -25,6 +25,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int minGear = -1;
     [SerializeField] private int maxGear = 1;
 
+    public int CurrentGear
+    {
+        get { return currentGear; }
+    }
+
+
     [SerializeField] private float maxReverseSpeed = 10f;
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
