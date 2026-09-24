@@ -282,9 +282,8 @@ GameObject:
   - component: {fileID: 7648150771720964596}
   - component: {fileID: 405516336568483645}
   - component: {fileID: 5807651474139696816}
-  - component: {fileID: 3209875599640633114}
   - component: {fileID: 1219773520734857078}
-  - component: {fileID: 7555038247245008242}
+  - component: {fileID: 5896066152307448490}
   m_Layer: 0
   m_Name: Voiture
   m_TagString: Player
@@ -341,7 +340,7 @@ MonoBehaviour:
   maxGear: 1
   maxReverseSpeed: 10
   maxGear0Speed: 5
-  maxGear1Speed: 25
+  maxGear1Speed: 15
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -369,17 +368,6 @@ MonoBehaviour:
   wheels:
   - {fileID: 7370812797074531483}
   - {fileID: 5853608840668807357}
-  keyPressAudioSource: {fileID: 1219773520734857078}
-  contactSound: {fileID: 8300000, guid: fc440ff0f8762a047ab1d1acd0ed41fb, type: 3}
-  acceleratorPressSound: {fileID: 8300000, guid: ca5ade6aa2793104d9713f5d2123825d, type: 3}
-  brakeSound: {fileID: 8300000, guid: ca5ade6aa2793104d9713f5d2123825d, type: 3}
-  gearSwitchSound: {fileID: 8300000, guid: ca5ade6aa2793104d9713f5d2123825d, type: 3}
-  randomButton2Sound: {fileID: 8300000, guid: ca5ade6aa2793104d9713f5d2123825d, type: 3}
-  randomButton3Sound: {fileID: 8300000, guid: 9a4d7e2b37b9c8a4d971228607cdc5be, type: 3}
-  acceleratorAudioSource: {fileID: 7555038247245008242}
-  acceleratorLoopSound: {fileID: 8300000, guid: 78f2d05082a227045a586e7c265a5362, type: 3}
-  engineAudioSource: {fileID: 1219773520734857078}
-  engineSound: {fileID: 8300000, guid: 922092feb56094949ae500f31c3e170f, type: 3}
 --- !u!54 &405516336568483645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -428,20 +416,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 2.5}
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!114 &3209875599640633114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1818705757850669688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 105eaa8326f8e68459f34d304796c7e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreOnCollision
-  scoreValueText: {fileID: 0}
-  requiredTag: 
 --- !u!82 &1219773520734857078
 AudioSource:
   m_ObjectHideFlags: 0
@@ -539,7 +513,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &7555038247245008242
+--- !u!82 &5896066152307448490
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1092,7 +1066,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1368054687500583222}
   - component: {fileID: 3372398055442582165}
-  - component: {fileID: 1666542649871503894}
   - component: {fileID: 2268397257469086993}
   m_Layer: 0
   m_Name: Retroviseur Cam
@@ -1167,14 +1140,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1666542649871503894
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6273805203035366939}
-  m_Enabled: 1
 --- !u!114 &2268397257469086993
 MonoBehaviour:
   m_ObjectHideFlags: 0

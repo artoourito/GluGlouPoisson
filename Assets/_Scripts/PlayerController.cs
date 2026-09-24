@@ -27,32 +27,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxReverseSpeed = 10f;
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
+
     [SerializeField] private AnimationCurve accelerationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private bool _isShiftButtonHeld;
 
-    [SerializeField] private List<Transform> wheels = new List<Transform>();
-
-    [Header("Audio - Sons par action")]
-    [SerializeField] private AudioSource keyPressAudioSource;
-
-    [SerializeField] private AudioClip contactSound;
-    [SerializeField] private AudioClip acceleratorPressSound;
-    [SerializeField] private AudioClip brakeSound;
-    [SerializeField] private AudioClip gearSwitchSound;
-    [SerializeField] private AudioClip randomButton2Sound;
-    [SerializeField] private AudioClip randomButton3Sound;
-
-    [Header("Audio - Acceleration")]
-    [SerializeField] private AudioSource acceleratorAudioSource;
-    [SerializeField] private AudioClip acceleratorLoopSound;
-
-    [Header("Audio - Moteur")]
-    [SerializeField] private AudioSource engineAudioSource;
-    [SerializeField] private AudioClip engineSound;
+    [SerializeField] private List<Transform> wheels =
+        new List<Transform>();
 
     private Rigidbody _rb;
+
     private bool _joystickIsUsed = false;
     private bool _powerOn = false;
 
@@ -60,7 +45,9 @@ public class PlayerController : MonoBehaviour
     private float _transitionTargetSpeed = 0f;
     private float _transitionDuration = 1f;
     private float _transitionElapsedTime = 0f;
+
     private bool _isTransitioning = false;
+
     private AnimationCurve _activeCurve = null;
 
     private float _bounceTimer = 0f;
@@ -70,69 +57,94 @@ public class PlayerController : MonoBehaviour
 
     #region Built-in Methods
 
-    void Start()
+    private void Start()
     {
-        InputManager.Instance.startAcceleratorPedalAction += OnAcceleratorPedalStarted;
-        InputManager.Instance.cancelAcceleratorPedalAction += OnAcceleratorPedalCanceled;
+        InputManager.Instance.startAcceleratorPedalAction +=
+            OnAcceleratorPedalStarted;
 
-        InputManager.Instance.startBrakePedalAction += OnBrakePedalStarted;
-        InputManager.Instance.cancelBrakePedalAction += OnBrakePedalCanceled;
+        InputManager.Instance.cancelAcceleratorPedalAction +=
+            OnAcceleratorPedalCanceled;
 
-        InputManager.Instance.startSwitchPedalAction += OnSwitchPedalStarted;
-        InputManager.Instance.cancelSwitchPedalAction += OnSwitchPedalCanceled;
+        InputManager.Instance.startBrakePedalAction +=
+            OnBrakePedalStarted;
 
-        InputManager.Instance.carSteeringWheelAction += OnCarSteeringWheelCalled;
-        InputManager.Instance.automaticTransmissionAction += OnAutomaticTransmissionCalled;
+        InputManager.Instance.cancelBrakePedalAction +=
+            OnBrakePedalCanceled;
 
-        InputManager.Instance.randomButton1Action += OnRandomButton1Called;
-        InputManager.Instance.randomButton2Action += OnRandomButton2Called;
-        InputManager.Instance.randomButton3Action += OnRandomButton3Called;
+        InputManager.Instance.startSwitchPedalAction +=
+            OnSwitchPedalStarted;
 
-        InputManager.Instance.powerButtonAction += OnPowerButtonCalled;
+        InputManager.Instance.cancelSwitchPedalAction +=
+            OnSwitchPedalCanceled;
+
+        InputManager.Instance.carSteeringWheelAction +=
+            OnCarSteeringWheelCalled;
+
+        InputManager.Instance.automaticTransmissionAction +=
+            OnAutomaticTransmissionCalled;
+
+        InputManager.Instance.randomButton1Action +=
+            OnRandomButton1Called;
+
+        InputManager.Instance.randomButton2Action +=
+            OnRandomButton2Called;
+
+        InputManager.Instance.randomButton3Action +=
+            OnRandomButton3Called;
+
+        InputManager.Instance.powerButtonAction +=
+            OnPowerButtonCalled;
 
         _rb = GetComponent<Rigidbody>();
-
-        // Engine sound
-        if (engineAudioSource != null)
-        {
-            engineAudioSource.clip = engineSound;
-            engineAudioSource.loop = true;
-        }
-
-        // Accelerator loop sound
-        if (acceleratorAudioSource != null)
-        {
-            acceleratorAudioSource.clip = acceleratorLoopSound;
-            acceleratorAudioSource.loop = true;
-        }
     }
 
 
     private void OnDisable()
     {
-        InputManager.Instance.startAcceleratorPedalAction -= OnAcceleratorPedalStarted;
-        InputManager.Instance.cancelAcceleratorPedalAction -= OnAcceleratorPedalCanceled;
+        InputManager.Instance.startAcceleratorPedalAction -=
+            OnAcceleratorPedalStarted;
 
-        InputManager.Instance.startBrakePedalAction -= OnBrakePedalStarted;
-        InputManager.Instance.cancelBrakePedalAction -= OnBrakePedalCanceled;
+        InputManager.Instance.cancelAcceleratorPedalAction -=
+            OnAcceleratorPedalCanceled;
 
-        InputManager.Instance.startSwitchPedalAction -= OnSwitchPedalStarted;
-        InputManager.Instance.cancelSwitchPedalAction -= OnSwitchPedalCanceled;
+        InputManager.Instance.startBrakePedalAction -=
+            OnBrakePedalStarted;
 
-        InputManager.Instance.carSteeringWheelAction -= OnCarSteeringWheelCalled;
-        InputManager.Instance.automaticTransmissionAction -= OnAutomaticTransmissionCalled;
+        InputManager.Instance.cancelBrakePedalAction -=
+            OnBrakePedalCanceled;
 
-        InputManager.Instance.randomButton1Action -= OnRandomButton1Called;
-        InputManager.Instance.randomButton2Action -= OnRandomButton2Called;
-        InputManager.Instance.randomButton3Action -= OnRandomButton3Called;
+        InputManager.Instance.startSwitchPedalAction -=
+            OnSwitchPedalStarted;
 
-        InputManager.Instance.powerButtonAction -= OnPowerButtonCalled;
+        InputManager.Instance.cancelSwitchPedalAction -=
+            OnSwitchPedalCanceled;
 
-        StopAcceleratorSound();
+        InputManager.Instance.carSteeringWheelAction -=
+            OnCarSteeringWheelCalled;
+
+        InputManager.Instance.automaticTransmissionAction -=
+            OnAutomaticTransmissionCalled;
+
+        InputManager.Instance.randomButton1Action -=
+            OnRandomButton1Called;
+
+        InputManager.Instance.randomButton2Action -=
+            OnRandomButton2Called;
+
+        InputManager.Instance.randomButton3Action -=
+            OnRandomButton3Called;
+
+        InputManager.Instance.powerButtonAction -=
+            OnPowerButtonCalled;
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.StopLoop();
+        }
     }
 
 
-    void Update()
+    private void Update()
     {
         if (_bounceTimer > 0f)
         {
@@ -140,7 +152,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Speed transition
+
         if (_isTransitioning)
         {
             _transitionElapsedTime += Time.deltaTime;
@@ -170,7 +182,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Gear shifting
+
         if (_powerOn)
         {
             Vector2 joystickValue =
@@ -181,11 +193,13 @@ public class PlayerController : MonoBehaviour
                 if (joystickValue.y > 0.8f && !_joystickIsUsed)
                 {
                     _joystickIsUsed = true;
+
                     GearUp();
                 }
                 else if (joystickValue.y < -0.8f && !_joystickIsUsed)
                 {
                     _joystickIsUsed = true;
+
                     GearDown();
                 }
                 else if (Mathf.Abs(joystickValue.y) < 0.3f)
@@ -195,12 +209,13 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Rotation
+
         currentAngle = Mathf.MoveTowards(
             currentAngle,
             targetAngle,
             rotationSpeed * Time.deltaTime
         );
+
 
         if (Mathf.Abs(moveSpeed) > 0.1f)
         {
@@ -217,7 +232,7 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-        // Movement
+
         Vector3 targetVelocity =
             transform.forward * moveSpeed;
 
@@ -225,10 +240,11 @@ public class PlayerController : MonoBehaviour
 
         _rb.linearVelocity = targetVelocity;
 
-        // Wheel rotation
+
         foreach (Transform wheel in wheels)
         {
-            Vector3 wheelRota = wheel.localEulerAngles;
+            Vector3 wheelRota =
+                wheel.localEulerAngles;
 
             wheelRota.y = currentAngle;
 
@@ -242,26 +258,23 @@ public class PlayerController : MonoBehaviour
 
     #region Input Methods
 
-    void OnAcceleratorPedalStarted()
+    private void OnAcceleratorPedalStarted()
     {
-        Debug.Log("Pedal d acceleration appuyé");
+        Debug.Log("Pedal d'acceleration appuyé");
 
-        // One click sound
-        PlayActionSound(acceleratorPressSound);
-
-        // Start looping accelerator sound
-        StartAcceleratorSound();
+        SoundManager.Instance.Play("AcceleratorPress");
+        SoundManager.Instance.PlayLoop("AcceleratorLoop");
 
         Accelerator();
     }
 
 
-    void OnAcceleratorPedalCanceled()
+    private void OnAcceleratorPedalCanceled()
     {
-        Debug.Log("Pedal d acceleration relaché");
+        Debug.Log("Pedal d'acceleration relâché");
 
-        // Stop looping accelerator sound
-        StopAcceleratorSound();
+        SoundManager.Instance.Play("AcceleratorRelease");
+        SoundManager.Instance.StopLoop();
 
         targetSpeed = 0f;
 
@@ -273,12 +286,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void OnBrakePedalStarted()
+    private void OnBrakePedalStarted()
     {
-        Debug.Log("Pedal brake appuyé");
+        Debug.Log("Pedal de frein appuyé");
 
-        // One sound on press
-        PlayActionSound(brakeSound);
+        SoundManager.Instance.Play("BrakePress");
 
         StartSpeedTransition(
             0f,
@@ -288,13 +300,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void OnBrakePedalCanceled()
+    private void OnBrakePedalCanceled()
     {
-        Debug.Log("Pedal brake relâché");
+        Debug.Log("Pedal de frein relâché");
+
+        SoundManager.Instance.Play("BrakeRelease");
     }
 
 
-    void OnSwitchPedalStarted()
+    private void OnSwitchPedalStarted()
     {
         Debug.Log("Pedal Switch Start");
 
@@ -302,7 +316,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void OnSwitchPedalCanceled()
+    private void OnSwitchPedalCanceled()
     {
         Debug.Log("Pedal Switch Canceled");
 
@@ -310,19 +324,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void OnCarSteeringWheelCalled()
+    private void OnCarSteeringWheelCalled()
     {
         Debug.Log("Volant");
-
-        // No sound for turning
     }
 
 
-    void OnAutomaticTransmissionCalled()
+    private void OnAutomaticTransmissionCalled()
     {
         Debug.Log("Boite auto");
-
-        // No sound
     }
 
 
@@ -330,7 +340,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Bouton random 1");
 
-        // No sound requested for button 1
+        SoundManager.Instance.Play("RandomButton1");
     }
 
 
@@ -338,7 +348,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Bouton random 2");
 
-        PlayActionSound(randomButton2Sound);
+        SoundManager.Instance.Play("RandomButton2");
 
         TurnRight();
     }
@@ -348,7 +358,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Bouton random 3");
 
-        PlayActionSound(randomButton3Sound);
+        SoundManager.Instance.Play("RandomButton3");
 
         TurnLeft();
     }
@@ -356,20 +366,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnPowerButtonCalled()
     {
-        // Contact sound
-        PlayActionSound(contactSound);
-
         Power();
     }
 
     #endregion
 
 
-    #region Vehicule Logic Methods
+    #region Vehicle Logic Methods
 
     public void SetSteeringInput(float rawAngle)
     {
-        // Limit the received angle
         targetAngle = Mathf.Clamp(
             rawAngle,
             -maxAngle,
@@ -381,14 +387,14 @@ public class PlayerController : MonoBehaviour
     private void StartSpeedTransition(
         float target,
         float duration,
-        AnimationCurve curve
-    )
+        AnimationCurve curve)
     {
         _transitionStartSpeed = moveSpeed;
         _transitionTargetSpeed = target;
         _transitionDuration = duration;
         _transitionElapsedTime = 0f;
         _activeCurve = curve;
+
         _isTransitioning = true;
     }
 
@@ -396,7 +402,9 @@ public class PlayerController : MonoBehaviour
     private void Accelerator()
     {
         if (!_powerOn)
+        {
             return;
+        }
 
         float targetGoal = 0f;
 
@@ -452,10 +460,9 @@ public class PlayerController : MonoBehaviour
             maxGear
         );
 
-        // Only play if the gear actually changed
         if (currentGear != previousGear)
         {
-            PlayActionSound(gearSwitchSound);
+            SoundManager.Instance.Play("GearSwitch");
         }
 
         UpdateSpeedLimit();
@@ -471,10 +478,9 @@ public class PlayerController : MonoBehaviour
             currentGear - 1
         );
 
-        // Only play if the gear actually changed
         if (currentGear != previousGear)
         {
-            PlayActionSound(gearSwitchSound);
+            SoundManager.Instance.Play("GearSwitch");
         }
 
         UpdateSpeedLimit();
@@ -527,25 +533,15 @@ public class PlayerController : MonoBehaviour
 
         if (_powerOn)
         {
-            Debug.Log("La voiture est allumé");
+            Debug.Log("La voiture est allumée");
 
-            if (engineAudioSource != null &&
-                !engineAudioSource.isPlaying)
-            {
-                engineAudioSource.Play();
-            }
+            SoundManager.Instance.Play("Contact");
         }
         else
         {
             Debug.Log("La voiture est éteinte");
 
-            if (engineAudioSource != null)
-            {
-                engineAudioSource.Stop();
-            }
-
-            // Make sure acceleration loop also stops
-            StopAcceleratorSound();
+            SoundManager.Instance.Play("Contact");
         }
 
         StartSpeedTransition(
@@ -556,42 +552,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void PlayActionSound(AudioClip clip)
-    {
-        if (keyPressAudioSource != null &&
-            clip != null)
-        {
-            keyPressAudioSource.PlayOneShot(clip);
-        }
-    }
-
-
-    private void StartAcceleratorSound()
-    {
-        if (acceleratorAudioSource != null &&
-            !acceleratorAudioSource.isPlaying)
-        {
-            acceleratorAudioSource.Play();
-        }
-    }
-
-
-    private void StopAcceleratorSound()
-    {
-        if (acceleratorAudioSource != null &&
-            acceleratorAudioSource.isPlaying)
-        {
-            acceleratorAudioSource.Stop();
-        }
-    }
-
-
     public void OnBounced()
     {
         moveSpeed = 0f;
         targetSpeed = 0f;
         _isTransitioning = false;
-
         _bounceTimer = 0.3f;
     }
 
