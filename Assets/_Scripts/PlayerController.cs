@@ -34,12 +34,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
 
-    [Header("Continuous Button Sound")]
-    [SerializeField] private string continuousButtonSoundId;
-
     [SerializeField]
     private AnimationCurve accelerationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+    [Header("Sounds")]
+    [SerializeField] private string discoSoundId;
+    [SerializeField] private string honkSoundId;
 
     [SerializeField]
     private List<Transform> wheels =
@@ -97,11 +98,11 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton2Action +=
             OnRandomButton2Called;
 
+        InputManager.Instance.randomButton2CanceledAction +=
+            OnRandomButton2Canceled;
+
         InputManager.Instance.randomButton3Action +=
             OnRandomButton3Called;
-
-        InputManager.Instance.randomButton3CanceledAction +=
-            OnRandomButton3Canceled;
 
         InputManager.Instance.powerButtonAction +=
             OnPowerButtonCalled;
@@ -151,11 +152,11 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton2Action -=
             OnRandomButton2Called;
 
+        InputManager.Instance.randomButton2CanceledAction -=
+            OnRandomButton2Canceled;
+
         InputManager.Instance.randomButton3Action -=
             OnRandomButton3Called;
-
-        InputManager.Instance.randomButton3CanceledAction -=
-            OnRandomButton3Canceled;
 
         InputManager.Instance.powerButtonAction -=
             OnPowerButtonCalled;
@@ -176,7 +177,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Speed transition
         if (_isTransitioning)
         {
             _transitionElapsedTime += Time.deltaTime;
@@ -210,13 +210,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Steering
+
         currentAngle =
             Mathf.MoveTowards(
                 currentAngle,
                 targetAngle,
                 rotationSpeed * Time.deltaTime
             );
+
 
         if (Mathf.Abs(moveSpeed) > 0.1f)
         {
@@ -233,7 +234,7 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0, turnAmount, 0);
         }
 
-        // Rigidbody
+
         Vector3 targetVelocity =
             transform.forward * moveSpeed;
 
@@ -243,7 +244,7 @@ public class PlayerController : MonoBehaviour
         _rb.linearVelocity =
             targetVelocity;
 
-        // Wheels
+
         foreach (Transform wheel in wheels)
         {
             Vector3 wheelRotation =
@@ -326,43 +327,45 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    // RANDOM BUTTON 1 = DISCO
     private void OnRandomButton1Called()
     {
-        // RandomButton1 now uses the old RandomButton2 effect.
         Debug.Log("Disco");
-    }
 
-
-    private void OnRandomButton2Called()
-    {
-        // RandomButton2 now uses the old RandomButton1 effect.
-        Debug.Log("Warnings");
-    }
-
-
-    private void OnRandomButton3Called()
-    {
-        // RandomButton3 now plays a sound continuously.
-        Debug.Log("Continuous sound START");
-
-        if (SoundManager.Instance != null &&
-            !string.IsNullOrEmpty(continuousButtonSoundId))
+        if (SoundManager.Instance != null)
         {
-            SoundManager.Instance.PlayLoop(
-                continuousButtonSoundId
-            );
+            SoundManager.Instance.Play(discoSoundId);
         }
     }
 
 
-    private void OnRandomButton3Canceled()
+    // RANDOM BUTTON 2 = HONK
+    private void OnRandomButton2Called()
     {
-        Debug.Log("Continuous sound STOP");
+        Debug.Log("Honk");
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlayLoop(honkSoundId);
+        }
+    }
+
+
+    private void OnRandomButton2Canceled()
+    {
+        Debug.Log("Honk released");
 
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.StopLoop();
         }
+    }
+
+
+    // RANDOM BUTTON 3 = NOTHING
+    private void OnRandomButton3Called()
+    {
+        Debug.Log("Random Button 3 - Nothing");
     }
 
 
