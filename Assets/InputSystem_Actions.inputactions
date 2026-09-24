@@ -1143,7 +1143,7 @@
                 {
                     "name": "",
                     "id": "3229c821-7c90-4d8e-8619-637d5c683889",
-                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1176,7 +1176,7 @@
                 {
                     "name": "",
                     "id": "cf92ed97-0068-4446-8b89-37c3041185e4",
-                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button5",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1209,7 +1209,7 @@
                 {
                     "name": "",
                     "id": "6e42e692-3c27-418f-821d-26853a68c367",
-                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/trigger",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button7",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1252,6 +1252,17 @@
                 },
                 {
                     "name": "",
+                    "id": "884bfcaf-fd5a-453c-b17f-7f287722a780",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "RandomButton1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "47f845ec-ead5-45b1-a3e6-de28828ed6ab",
                     "path": "<Keyboard>/s",
                     "interactions": "",
@@ -1265,6 +1276,17 @@
                     "name": "",
                     "id": "33486ada-3046-43c9-9757-2e6304b46145",
                     "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RandomButton2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1164311b-5d3b-4b9d-9372-d224ccc81605",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -1319,7 +1341,7 @@
                 {
                     "name": "",
                     "id": "50c36e17-6546-4ab8-bb61-6bdc39078dff",
-                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button4",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
