@@ -3,19 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-/// <summary>
-/// Fait fondre l'écran au noir puis charge une nouvelle scène
-/// lorsqu'un objet (ex: le joueur) entre en collision avec ce trigger.
-///
-/// MISE EN PLACE :
-/// 1. Attachez ce script à un GameObject possédant un Collider (2D ou 3D)
-///    avec "Is Trigger" coché.
-/// 2. Créez un Canvas avec une Image plein écran noire, opacité initiale à 0,
-///    et assignez-la au champ "fadeImage" ci-dessous.
-/// 3. Renseignez le nom de la scène cible dans "sceneToLoad".
-/// 4. Assurez-vous que l'objet qui déclenche le trigger a le bon Tag
-///    (par défaut "Player") ou ajustez la vérification dans le code.
-/// </summary>
 public class SceneFadeTransition : MonoBehaviour
 {
     [Header("Réglages du fondu")]
@@ -30,14 +17,13 @@ public class SceneFadeTransition : MonoBehaviour
     [SerializeField] private string sceneToLoad;
 
     [Header("Filtrage du déclencheur")]
-    [Tooltip("Tag requis sur l'objet qui déclenche le trigger. Laisser vide pour accepter n'importe quel objet.")]
+    [Tooltip("Tag requis sur l'objet qui déclenche le trigger.")]
     [SerializeField] private string requiredTag = "Player";
 
     private bool isTransitioning = false;
 
     private void Awake()
     {
-        // Sécurité : s'assurer que l'image de fondu est bien invisible au démarrage
         if (fadeImage != null)
         {
             Color c = fadeImage.color;
@@ -47,11 +33,9 @@ public class SceneFadeTransition : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[SceneFadeTransition] Aucune 'fadeImage' assignée. Le fondu ne sera pas visible.");
+            Debug.LogWarning("[SceneFadeTransition] Aucune 'fadeImage' assignée.");
         }
     }
-
-    // Utilisez celle qui correspond à votre projet (2D ou 3D) et supprimez l'autre.
 
     private void OnTriggerEnter(Collider other)
     {
@@ -95,34 +79,14 @@ public class SceneFadeTransition : MonoBehaviour
         }
         else
         {
-            // Pas d'image de fondu : on attend quand même la durée pour garder le timing
             yield return new WaitForSeconds(fadeDuration);
         }
 
-        // --- CHARGEMENT DU SCORE AVEC TEMPS RESTANT ---
-        // 1. On récupère le score accumulé jusqu'ici (0 par défaut)
-        int currentTotal = PlayerPrefs.GetInt("CurrentGameScore", 0);
-
-        // 2. On définit les points de base du niveau
-        int scoreBaseNiveau = 10;
-
-        // 3. On va chercher le temps restant dans le GameManager (s'il existe)
-        float tempsRestant = 0f;
+        // --- SCORE : géré par le GameManager ---
         if (GameManager.Instance != null)
         {
-            tempsRestant = GameManager.Instance.Timer;
+            GameManager.Instance.AddLevelScore();
         }
-
-        // 4. On convertit le temps en points entiers (arrondi) et on ajoute le tout
-        int pointsTemps = Mathf.RoundToInt(tempsRestant);
-        int scoreGagnePourCeNiveau = scoreBaseNiveau + pointsTemps;
-
-        // On l'ajoute au total de la partie
-        currentTotal += scoreGagnePourCeNiveau;
-
-        // 5. On sauvegarde pour la suite
-        PlayerPrefs.SetInt("CurrentGameScore", currentTotal);
-        PlayerPrefs.Save();
 
         // --- Chargement de la nouvelle scène ---
         if (!string.IsNullOrEmpty(sceneToLoad))

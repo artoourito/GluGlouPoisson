@@ -1768,6 +1768,10 @@ PrefabInstance:
       propertyPath: gameoverSound
       value: 
       objectReference: {fileID: 8300000, guid: e121179aa7f1346469abc665d793f43f, type: 3}
+    - target: {fileID: 2560464687394455922, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: levelDuration
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 2959180146484348267, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: m_LocalScale.x
       value: 46.940662
