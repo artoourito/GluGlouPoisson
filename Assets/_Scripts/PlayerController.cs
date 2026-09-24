@@ -24,22 +24,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int currentGear = 0;
     [SerializeField] private int minGear = -1;
     [SerializeField] private int maxGear = 1;
+
     [SerializeField] private float maxReverseSpeed = 10f;
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
 
-    [SerializeField] private AnimationCurve accelerationCurve =
+    [SerializeField]
+    private AnimationCurve accelerationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private bool _isShiftButtonHeld;
 
-    [SerializeField] private List<Transform> wheels =
+    [SerializeField]
+    private List<Transform> wheels =
         new List<Transform>();
 
     private Rigidbody _rb;
-
-    private bool _joystickIsUsed = false;
-    private bool _powerOn = false;
 
     private float _transitionStartSpeed = 0f;
     private float _transitionTargetSpeed = 0f;
@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
     private AnimationCurve _activeCurve = null;
 
     private float _bounceTimer = 0f;
+
+    private bool _powerOn = false;
 
     #endregion
 
@@ -95,12 +97,21 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.powerButtonAction +=
             OnPowerButtonCalled;
 
+        InputManager.Instance.gearUpAction +=
+            GearUp;
+
+        InputManager.Instance.gearDownAction +=
+            GearDown;
+
         _rb = GetComponent<Rigidbody>();
     }
 
 
     private void OnDisable()
     {
+        if (InputManager.Instance == null)
+            return;
+
         InputManager.Instance.startAcceleratorPedalAction -=
             OnAcceleratorPedalStarted;
 
@@ -137,10 +148,11 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.powerButtonAction -=
             OnPowerButtonCalled;
 
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.StopLoop();
-        }
+        InputManager.Instance.gearUpAction -=
+            GearUp;
+
+        InputManager.Instance.gearDownAction -=
+            GearDown;
     }
 
 
@@ -152,27 +164,31 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-
+        // Speed transition
         if (_isTransitioning)
         {
             _transitionElapsedTime += Time.deltaTime;
 
-            float t = Mathf.Clamp01(
-                _transitionElapsedTime / _transitionDuration
-            );
+            float t =
+                Mathf.Clamp01(
+                    _transitionElapsedTime /
+                    _transitionDuration
+                );
 
             float evaluationFactor = t;
 
             if (_activeCurve != null)
             {
-                evaluationFactor = _activeCurve.Evaluate(t);
+                evaluationFactor =
+                    _activeCurve.Evaluate(t);
             }
 
-            moveSpeed = Mathf.Lerp(
-                _transitionStartSpeed,
-                _transitionTargetSpeed,
-                evaluationFactor
-            );
+            moveSpeed =
+                Mathf.Lerp(
+                    _transitionStartSpeed,
+                    _transitionTargetSpeed,
+                    evaluationFactor
+                );
 
             targetSpeed = _transitionTargetSpeed;
 
@@ -183,44 +199,19 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (_powerOn)
-        {
-            Vector2 joystickValue =
-                InputManager.Instance.AutomaticTransmission;
-
-            if (_isShiftButtonHeld)
-            {
-                if (joystickValue.y > 0.8f && !_joystickIsUsed)
-                {
-                    _joystickIsUsed = true;
-
-                    GearUp();
-                }
-                else if (joystickValue.y < -0.8f && !_joystickIsUsed)
-                {
-                    _joystickIsUsed = true;
-
-                    GearDown();
-                }
-                else if (Mathf.Abs(joystickValue.y) < 0.3f)
-                {
-                    _joystickIsUsed = false;
-                }
-            }
-        }
-
-
-        currentAngle = Mathf.MoveTowards(
-            currentAngle,
-            targetAngle,
-            rotationSpeed * Time.deltaTime
-        );
+        // Steering
+        currentAngle =
+            Mathf.MoveTowards(
+                currentAngle,
+                targetAngle,
+                rotationSpeed * Time.deltaTime
+            );
 
 
         if (Mathf.Abs(moveSpeed) > 0.1f)
         {
             float directionMultiplier =
-                (moveSpeed < 0) ? -1f : 1f;
+                moveSpeed < 0 ? -1f : 1f;
 
             float turnAmount =
                 currentAngle *
@@ -233,23 +224,28 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        // Rigidbody
         Vector3 targetVelocity =
             transform.forward * moveSpeed;
 
-        targetVelocity.y = _rb.linearVelocity.y;
+        targetVelocity.y =
+            _rb.linearVelocity.y;
 
-        _rb.linearVelocity = targetVelocity;
+        _rb.linearVelocity =
+            targetVelocity;
 
 
+        // Wheels
         foreach (Transform wheel in wheels)
         {
-            Vector3 wheelRota =
+            Vector3 wheelRotation =
                 wheel.localEulerAngles;
 
-            wheelRota.y = currentAngle;
+            wheelRotation.y =
+                currentAngle;
 
             wheel.localRotation =
-                Quaternion.Euler(wheelRota);
+                Quaternion.Euler(wheelRotation);
         }
     }
 
@@ -262,19 +258,13 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Pedal d'acceleration appuyé");
 
-        SoundManager.Instance.Play("AcceleratorPress");
-        SoundManager.Instance.PlayLoop("AcceleratorLoop");
-
         Accelerator();
     }
 
 
     private void OnAcceleratorPedalCanceled()
     {
-        Debug.Log("Pedal d'acceleration relâché");
-
-        SoundManager.Instance.Play("AcceleratorRelease");
-        SoundManager.Instance.StopLoop();
+        Debug.Log("Pedal d'acceleration relaché");
 
         targetSpeed = 0f;
 
@@ -288,9 +278,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnBrakePedalStarted()
     {
-        Debug.Log("Pedal de frein appuyé");
-
-        SoundManager.Instance.Play("BrakePress");
+        Debug.Log("Pedal brake appuyé");
 
         StartSpeedTransition(
             0f,
@@ -302,9 +290,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnBrakePedalCanceled()
     {
-        Debug.Log("Pedal de frein relâché");
-
-        SoundManager.Instance.Play("BrakeRelease");
+        Debug.Log("Pedal brake relaché");
     }
 
 
@@ -338,17 +324,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnRandomButton1Called()
     {
-        Debug.Log("Bouton random 1");
-
-        SoundManager.Instance.Play("RandomButton1");
+        Debug.Log("Warnings");
     }
 
 
     private void OnRandomButton2Called()
     {
-        Debug.Log("Bouton random 2");
-
-        SoundManager.Instance.Play("RandomButton2");
+        Debug.Log("Disco");
 
         TurnRight();
     }
@@ -357,8 +339,6 @@ public class PlayerController : MonoBehaviour
     private void OnRandomButton3Called()
     {
         Debug.Log("Bouton random 3");
-
-        SoundManager.Instance.Play("RandomButton3");
 
         TurnLeft();
     }
@@ -372,15 +352,23 @@ public class PlayerController : MonoBehaviour
     #endregion
 
 
-    #region Vehicle Logic Methods
+    #region Vehicle Logic
 
     public void SetSteeringInput(float rawAngle)
     {
-        targetAngle = Mathf.Clamp(
-            rawAngle,
-            -maxAngle,
-            maxAngle
-        );
+        // LVL 7: steering is inverted.
+        if (InputManager.Instance != null &&
+            InputManager.Instance.SteeringInverted)
+        {
+            rawAngle = -rawAngle;
+        }
+
+        targetAngle =
+            Mathf.Clamp(
+                rawAngle,
+                -maxAngle,
+                maxAngle
+            );
     }
 
 
@@ -394,7 +382,6 @@ public class PlayerController : MonoBehaviour
         _transitionDuration = duration;
         _transitionElapsedTime = 0f;
         _activeCurve = curve;
-
         _isTransitioning = true;
     }
 
@@ -402,23 +389,23 @@ public class PlayerController : MonoBehaviour
     private void Accelerator()
     {
         if (!_powerOn)
-        {
             return;
-        }
 
         float targetGoal = 0f;
 
-        if (currentGear == -1)
+        switch (currentGear)
         {
-            targetGoal = -maxReverseSpeed;
-        }
-        else if (currentGear == 0)
-        {
-            targetGoal = maxGear0Speed;
-        }
-        else if (currentGear == 1)
-        {
-            targetGoal = maxGear1Speed;
+            case -1:
+                targetGoal = -maxReverseSpeed;
+                break;
+
+            case 0:
+                targetGoal = maxGear0Speed;
+                break;
+
+            case 1:
+                targetGoal = maxGear1Speed;
+                break;
         }
 
         targetSpeed = targetGoal;
@@ -433,57 +420,73 @@ public class PlayerController : MonoBehaviour
 
     private void TurnRight()
     {
-        targetAngle = Mathf.Clamp(
-            targetAngle + angleStep,
-            -maxAngle,
-            maxAngle
-        );
+        targetAngle =
+            Mathf.Clamp(
+                targetAngle + angleStep,
+                -maxAngle,
+                maxAngle
+            );
     }
 
 
     private void TurnLeft()
     {
-        targetAngle = Mathf.Clamp(
-            targetAngle - angleStep,
-            -maxAngle,
-            maxAngle
-        );
+        targetAngle =
+            Mathf.Clamp(
+                targetAngle - angleStep,
+                -maxAngle,
+                maxAngle
+            );
     }
 
 
     private void GearUp()
     {
+        if (!_isShiftButtonHeld)
+            return;
+
         int previousGear = currentGear;
 
-        currentGear = Mathf.Min(
-            currentGear + 1,
-            maxGear
-        );
+        currentGear =
+            Mathf.Min(
+                currentGear + 1,
+                maxGear
+            );
 
         if (currentGear != previousGear)
         {
-            SoundManager.Instance.Play("GearSwitch");
-        }
+            Debug.Log(
+                "Gear Up: " +
+                currentGear
+            );
 
-        UpdateSpeedLimit();
+            UpdateSpeedLimit();
+        }
     }
 
 
     private void GearDown()
     {
+        if (!_isShiftButtonHeld)
+            return;
+
         int previousGear = currentGear;
 
-        currentGear = Mathf.Max(
-            minGear,
-            currentGear - 1
-        );
+        currentGear =
+            Mathf.Max(
+                minGear,
+                currentGear - 1
+            );
 
         if (currentGear != previousGear)
         {
-            SoundManager.Instance.Play("GearSwitch");
-        }
+            Debug.Log(
+                "Gear Down: " +
+                currentGear
+            );
 
-        UpdateSpeedLimit();
+            UpdateSpeedLimit();
+        }
     }
 
 
@@ -492,12 +495,13 @@ public class PlayerController : MonoBehaviour
         float maxAllowedSpeed =
             GetMaxSpeedForCurrentGear();
 
-        if (Mathf.Abs(moveSpeed) > maxAllowedSpeed)
+        if (Mathf.Abs(moveSpeed) >
+            maxAllowedSpeed)
         {
             float targetGoal =
-                (currentGear == -1)
-                ? -maxReverseSpeed
-                : maxAllowedSpeed;
+                currentGear == -1
+                    ? -maxReverseSpeed
+                    : maxAllowedSpeed;
 
             StartSpeedTransition(
                 targetGoal,
@@ -534,14 +538,10 @@ public class PlayerController : MonoBehaviour
         if (_powerOn)
         {
             Debug.Log("La voiture est allumée");
-
-            SoundManager.Instance.Play("Contact");
         }
         else
         {
             Debug.Log("La voiture est éteinte");
-
-            SoundManager.Instance.Play("Contact");
         }
 
         StartSpeedTransition(
@@ -556,7 +556,9 @@ public class PlayerController : MonoBehaviour
     {
         moveSpeed = 0f;
         targetSpeed = 0f;
+
         _isTransitioning = false;
+
         _bounceTimer = 0.3f;
     }
 
