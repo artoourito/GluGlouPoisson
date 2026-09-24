@@ -21,7 +21,7 @@ public class FaceMovementDirection : MonoBehaviour
 
     [Header("Correction d'orientation")]
     [Tooltip("Décalage en degrés à ajouter si le modèle de la voiture pointe de base vers le haut, l'arrière, etc.")]
-    [SerializeField] private float rotationOffset = 0f;
+    float rotationOffset = 180f;
 
     private Vector3 lastPosition;
 
