@@ -365,8 +365,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  discoSoundId: rickroll
-  honkSoundId: warnings
+  discoSoundId: RandomButton2
+  honkSoundId: RandomButton3
+  warningsSoundId: blinkers
   wheels:
   - {fileID: 7370812797074531483}
   - {fileID: 5853608840668807357}
