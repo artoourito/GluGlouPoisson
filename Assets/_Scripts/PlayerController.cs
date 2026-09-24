@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
 
+    // Communication avec l'UI
     [SerializeField]
     private AnimationCurve accelerationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -256,7 +257,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAcceleratorPedalStarted()
     {
-        Debug.Log("Pedal d'acceleration appuyé");
+        Debug.Log("Pedal d'acceleration appuyï¿½");
 
         Accelerator();
     }
@@ -264,7 +265,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnAcceleratorPedalCanceled()
     {
-        Debug.Log("Pedal d'acceleration relaché");
+        Debug.Log("Pedal d'acceleration relachï¿½");
 
         targetSpeed = 0f;
 
@@ -278,7 +279,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnBrakePedalStarted()
     {
-        Debug.Log("Pedal brake appuyé");
+        Debug.Log("Pedal brake appuyï¿½");
 
         StartSpeedTransition(
             0f,
@@ -290,7 +291,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnBrakePedalCanceled()
     {
-        Debug.Log("Pedal brake relaché");
+        Debug.Log("Pedal brake relachï¿½");
     }
 
 
@@ -453,6 +454,13 @@ public class PlayerController : MonoBehaviour
                 maxGear
             );
 
+        Debug.Log(
+            "GEAR UP : " +
+            previousGear +
+            " -> " +
+            currentGear
+        );
+
         if (currentGear != previousGear)
         {
             Debug.Log(
@@ -477,6 +485,13 @@ public class PlayerController : MonoBehaviour
                 minGear,
                 currentGear - 1
             );
+
+        Debug.Log(
+            "GEAR DOWN : " +
+            previousGear +
+            " -> " +
+            currentGear
+        );
 
         if (currentGear != previousGear)
         {
@@ -537,11 +552,11 @@ public class PlayerController : MonoBehaviour
 
         if (_powerOn)
         {
-            Debug.Log("La voiture est allumée");
+            Debug.Log("La voiture est allumï¿½e");
         }
         else
         {
-            Debug.Log("La voiture est éteinte");
+            Debug.Log("La voiture est ï¿½teinte");
         }
 
         StartSpeedTransition(

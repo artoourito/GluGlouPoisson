@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c2e9e321efa812e4ba423ec84c79cb2a
+guid: 0ff891dd3cdc16d47a05d9b8247fd2f0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 985029020270026209
-    second: Infinity-castle-sede_0
+      213: -6145182565965167770
+    second: fond vitesse_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Infinity-castle-sede_0
+      name: fond vitesse_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1920
-        height: 1080
+        width: 167
+        height: 1042
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1ed55aecca68bad00800000000000000
-      internalID: 985029020270026209
+      spriteID: 66309bbc30de7baa0800000000000000
+      internalID: -6145182565965167770
       vertices: []
       indices: 
       edges: []
@@ -137,7 +137,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Infinity-castle-sede_0: 985029020270026209
+      fond vitesse_0: -6145182565965167770
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
