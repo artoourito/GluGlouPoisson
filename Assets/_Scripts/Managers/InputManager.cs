@@ -26,7 +26,6 @@ public class InputManager : MonoBehaviour
 
     public event Action powerButtonAction;
 
-
     public event Action gearUpAction;
     public event Action gearDownAction;
 
@@ -85,10 +84,19 @@ public class InputManager : MonoBehaviour
 
     public bool SteeringInverted => _steeringInverted;
 
-    public Vector2 AutomaticTransmission =>
-        _automaticTransmissionInputAction.ReadValue<Vector2>();
+    public Vector2 AutomaticTransmission
+    {
+        get
+        {
+            if (_automaticTransmissionInputAction == null)
+                return Vector2.zero;
+
+            return _automaticTransmissionInputAction.ReadValue<Vector2>();
+        }
+    }
 
     #endregion
+
 
     #region Built-in Methods
 
@@ -134,12 +142,39 @@ public class InputManager : MonoBehaviour
         _powerButtonInputAction =
             InputSystem.actions.FindAction("PowerButton");
 
+        if (_vehiculeMap == null)
+        {
+            Debug.LogError(
+                "[InputManager] Vehicule action map not found!"
+            );
+        }
+        else
+        {
+            _vehiculeMap.Enable();
+        }
+
+        if (_automaticTransmissionInputAction == null)
+        {
+            Debug.LogError(
+                "[InputManager] AutomaticTransmission action not found!"
+            );
+        }
+        else
+        {
+            Debug.Log(
+                "[InputManager] AutomaticTransmission action found."
+            );
+        }
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
 
     private void OnEnable()
     {
+        if (_vehiculeMap != null)
+            _vehiculeMap.Enable();
+
         if (_acceleratorPedalInputAction != null)
         {
             _acceleratorPedalInputAction.started += StartAcceleratorPedal;
@@ -228,7 +263,6 @@ public class InputManager : MonoBehaviour
     {
         HandleSwappedInputs();
         HandleGearJoystick();
-
     }
 
     #endregion
@@ -378,7 +412,8 @@ public class InputManager : MonoBehaviour
 
     #region Random Buttons
 
-    // Random Button 1 = DISCO
+    // RANDOM BUTTON 1
+    // This is the DISCO button.
     private void RandomButton1(InputAction.CallbackContext context)
     {
         if (_reverseDiscoSwapped)
@@ -392,21 +427,16 @@ public class InputManager : MonoBehaviour
     }
 
 
-    // Random Button 2 = WARNINGS
+    // RANDOM BUTTON 2
+    // This is the CONTINUOUS SOUND button.
     private void RandomButton2(InputAction.CallbackContext context)
     {
-        if (_switchPedalWarningsSwapped)
-        {
-            startSwitchPedalAction?.Invoke();
-        }
-        else
-        {
-            randomButton2Action?.Invoke();
-        }
+        randomButton2Action?.Invoke();
     }
 
 
-    // Random Button 3 = CONTINUOUS SOUND
+    // RANDOM BUTTON 3
+    // This is the button that currently does NOTHING.
     private void RandomButton3(InputAction.CallbackContext context)
     {
         randomButton3Action?.Invoke();
@@ -442,7 +472,7 @@ public class InputManager : MonoBehaviour
 
     private void HandleSwappedInputs()
     {
-        // LVL 2:
+        // LVL 2
         // Accelerator <-> Contact
 
         if (_acceleratorContactSwapped)
@@ -472,15 +502,17 @@ public class InputManager : MonoBehaviour
         }
 
 
-        // LVL 6:
+        // LVL 6
         // Switch Pedal <-> Warnings
-        // Warnings is now RandomButton2
+        //
+        // Warnings stays on its intended button.
+        // This section only makes that button act as Switch Pedal.
 
         if (_switchPedalWarningsSwapped)
         {
             bool warningsPressed =
-                _randomButton2InputAction != null &&
-                _randomButton2InputAction.IsPressed();
+                _randomButton1InputAction != null &&
+                _randomButton1InputAction.IsPressed();
 
             if (warningsPressed && !_randomButton2WasPressed)
             {
@@ -499,8 +531,8 @@ public class InputManager : MonoBehaviour
             _powerButtonInputAction.IsPressed();
 
         _randomButton2WasPressed =
-            _randomButton2InputAction != null &&
-            _randomButton2InputAction.IsPressed();
+            _randomButton1InputAction != null &&
+            _randomButton1InputAction.IsPressed();
     }
 
     #endregion
@@ -518,12 +550,27 @@ public class InputManager : MonoBehaviour
 
         float y = value.y;
 
+        // TEMPORARY DEBUG
+        // This will show exactly what Unity receives.
+        if (Mathf.Abs(y) > 0.01f)
+        {
+            Debug.Log(
+                "GEAR JOYSTICK INPUT: " +
+                value
+            );
+        }
 
-        // +1 = second gear
+
+        // =========================
+        // SECOND GEAR
+        // =========================
+
         if (y > 0.8f)
         {
             if (!_secondGearWasUsed)
             {
+                Debug.Log("GEAR JOYSTICK: UP");
+
                 if (_brakeSecondGearSwapped)
                 {
                     startBrakePedalAction?.Invoke();
@@ -550,16 +597,20 @@ public class InputManager : MonoBehaviour
         }
 
 
-        // -1 = reverse
+        // =========================
+        // REVERSE
+        // =========================
+
         if (y < -0.8f)
         {
             if (!_reverseWasUsed)
             {
+                Debug.Log("GEAR JOYSTICK: DOWN");
+
                 if (_reverseDiscoSwapped)
                 {
                     // LVL 10:
                     // Reverse <-> Disco
-                    // Disco is now RandomButton1
                     randomButton1Action?.Invoke();
                 }
                 else
