@@ -1380,6 +1380,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
+      propertyPath: honkSoundId
+      value: RandomButton3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
+      propertyPath: discoSoundId
+      value: RandomButton2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648150771720964596, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: warningsSoundId
       value: blinkers
       objectReference: {fileID: 0}
