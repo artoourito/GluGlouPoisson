@@ -14,25 +14,30 @@ public class LeaderboardUI : MonoBehaviour
 
     void DisplayScores()
     {
-        // Nettoie les anciennes lignes s'il y en a
+        // 1. Nettoie les anciennes lignes s'il y en a
         foreach (Transform child in contentPanel)
         {
             Destroy(child.gameObject);
         }
 
-        // Exemple : Si tu affiches plusieurs scores sauvegardés
-        int bestScore = PlayerPrefs.GetInt("HighScore", 0);
+        // 2. Affichage du Dernier Score (EN PREMIER)
+        int lastScore = PlayerPrefs.GetInt("CurrentGameScore", 0);
+        GameObject lastRow = Instantiate(scoreRowPrefab, contentPanel);
+        TextMeshProUGUI lastRowText = lastRow.GetComponentInChildren<TextMeshProUGUI>();
 
-        // Instancie la ligne dans le Content
-        GameObject newRow = Instantiate(scoreRowPrefab, contentPanel);
-        TextMeshProUGUI rowText = newRow.GetComponentInChildren<TextMeshProUGUI>();
-
-        if (rowText != null)
+        if (lastRowText != null)
         {
-            rowText.text = "1. Meilleur Joueur : " + bestScore + " pts";
+            lastRowText.text = "Dernier Score : " + lastScore + " pts";
         }
 
-        // Si tu as une liste de plusieurs scores, tu fais une boucle ici 
-        // et chaque Instantiate ira se ranger tout seul grâce au Vertical Layout Group !
+        // 3. Affichage du Meilleur Score (EN DEUXIÈME)
+        int bestScore = PlayerPrefs.GetInt("HighScore", 0);
+        GameObject bestRow = Instantiate(scoreRowPrefab, contentPanel);
+        TextMeshProUGUI bestRowText = bestRow.GetComponentInChildren<TextMeshProUGUI>();
+
+        if (bestRowText != null)
+        {
+            bestRowText.text = "Meilleur Score : " + bestScore + " pts";
+        }
     }
 }
