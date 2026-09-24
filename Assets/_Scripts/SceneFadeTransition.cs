@@ -99,6 +99,18 @@ public class SceneFadeTransition : MonoBehaviour
             yield return new WaitForSeconds(fadeDuration);
         }
 
+        // --- CHARGEMENT DU SCORE (Ajouté ici) ---
+        // 1. On récupère le score accumulé jusqu'ici (0 par défaut)
+        int currentTotal = PlayerPrefs.GetInt("CurrentGameScore", 0);
+
+        // 2. On ajoute les points de ce niveau (par exemple 500 points par niveau réussi)
+        int scoreGagnePourCeNiveau = 500;
+        currentTotal += scoreGagnePourCeNiveau;
+
+        // 3. On sauvegarde pour la suite
+        PlayerPrefs.SetInt("CurrentGameScore", currentTotal);
+        PlayerPrefs.Save();
+
         // --- Chargement de la nouvelle scène ---
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
