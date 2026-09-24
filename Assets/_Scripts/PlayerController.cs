@@ -28,12 +28,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxGear0Speed = 10f;
     [SerializeField] private float maxGear1Speed = 25f;
 
-    [SerializeField] private AnimationCurve accelerationCurve =
+    // Communication avec l'UI
+    public int CurrentGear => currentGear;
+
+    [SerializeField]
+    private AnimationCurve accelerationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private bool _isShiftButtonHeld;
 
-    [SerializeField] private List<Transform> wheels =
+    [SerializeField]
+    private List<Transform> wheels =
         new List<Transform>();
 
     private Rigidbody _rb;
@@ -460,6 +465,13 @@ public class PlayerController : MonoBehaviour
             maxGear
         );
 
+        Debug.Log(
+            "GEAR UP : " +
+            previousGear +
+            " -> " +
+            currentGear
+        );
+
         if (currentGear != previousGear)
         {
             SoundManager.Instance.Play("GearSwitch");
@@ -476,6 +488,13 @@ public class PlayerController : MonoBehaviour
         currentGear = Mathf.Max(
             minGear,
             currentGear - 1
+        );
+
+        Debug.Log(
+            "GEAR DOWN : " +
+            previousGear +
+            " -> " +
+            currentGear
         );
 
         if (currentGear != previousGear)
