@@ -99,15 +99,28 @@ public class SceneFadeTransition : MonoBehaviour
             yield return new WaitForSeconds(fadeDuration);
         }
 
-        // --- CHARGEMENT DU SCORE (Ajouté ici) ---
+        // --- CHARGEMENT DU SCORE AVEC TEMPS RESTANT ---
         // 1. On récupère le score accumulé jusqu'ici (0 par défaut)
         int currentTotal = PlayerPrefs.GetInt("CurrentGameScore", 0);
 
-        // 2. On ajoute les points de ce niveau (par exemple 500 points par niveau réussi)
-        int scoreGagnePourCeNiveau = 500;
+        // 2. On définit les points de base du niveau
+        int scoreBaseNiveau = 500;
+
+        // 3. On va chercher le temps restant dans le GameManager (s'il existe)
+        float tempsRestant = 0f;
+        if (GameManager.Instance != null)
+        {
+            tempsRestant = GameManager.Instance.Timer;
+        }
+
+        // 4. On convertit le temps en points entiers (arrondi) et on ajoute le tout
+        int pointsTemps = Mathf.RoundToInt(tempsRestant);
+        int scoreGagnePourCeNiveau = scoreBaseNiveau + pointsTemps;
+
+        // On l'ajoute au total de la partie
         currentTotal += scoreGagnePourCeNiveau;
 
-        // 3. On sauvegarde pour la suite
+        // 5. On sauvegarde pour la suite
         PlayerPrefs.SetInt("CurrentGameScore", currentTotal);
         PlayerPrefs.Save();
 

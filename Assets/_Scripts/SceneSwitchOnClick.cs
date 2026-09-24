@@ -25,6 +25,16 @@ public class SceneSwitchOnClick : MonoBehaviour
     [Tooltip("Name of the scene to load (must be added to Build Settings).")]
     [SerializeField] private string sceneToLoad;
 
+    private void Start()
+    {
+        InputManager.Instance.randomButton3Action += LoadScene;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.randomButton3Action -= LoadScene;
+    }
+
     // Used for world objects with a Collider.
     private void OnMouseDown()
     {
