@@ -7,13 +7,13 @@ using UnityEngine.UI;
 /// Fait fondre l'écran au noir puis charge une nouvelle scène
 /// lorsqu'un objet (ex: le joueur) entre en collision avec ce trigger.
 ///
-/// Détruit également tous les NPC cars et car generators présents
-/// dans la scène lorsque le joueur déclenche la transition.
+/// Lorsque le joueur déclenche la transition, tous les NPC cars
+/// et car generators de la scène sont supprimés.
 /// </summary>
 public class SceneFadeTransition : MonoBehaviour
 {
     [Header("Réglages du fondu")]
-    [Tooltip("Image UI plein écran (noire, alpha = 0 au départ) utilisée pour le fondu.")]
+    [Tooltip("Image UI plein écran noire utilisée pour le fondu.")]
     [SerializeField] private Image fadeImage;
 
     [Tooltip("Durée du fondu au noir, en secondes.")]
@@ -38,11 +38,13 @@ public class SceneFadeTransition : MonoBehaviour
 
     private void Awake()
     {
+        // S'assurer que l'image de fondu est invisible au démarrage.
         if (fadeImage != null)
         {
             Color c = fadeImage.color;
             c.a = 0f;
             fadeImage.color = c;
+
             fadeImage.gameObject.SetActive(true);
         }
         else
@@ -69,6 +71,7 @@ public class SceneFadeTransition : MonoBehaviour
         if (isTransitioning)
             return;
 
+        // Vérification du tag du joueur.
         if (!string.IsNullOrEmpty(requiredTag) &&
             !other.CompareTag(requiredTag))
         {
@@ -77,7 +80,7 @@ public class SceneFadeTransition : MonoBehaviour
 
         isTransitioning = true;
 
-        // Supprime les NPC cars et les générateurs
+        // Supprimer les voitures et générateurs AVANT le fade.
         DeleteNPCCarsAndGenerators();
 
         StartCoroutine(FadeAndLoadScene());
@@ -85,57 +88,114 @@ public class SceneFadeTransition : MonoBehaviour
 
     private void DeleteNPCCarsAndGenerators()
     {
-        // --- NPC CARS ---
-        GameObject[] npcCars = GameObject.FindGameObjectsWithTag(npcCarTag);
+        // =========================================================
+        // NPC CARS
+        // =========================================================
+
+        GameObject[] npcCars =
+            GameObject.FindGameObjectsWithTag(npcCarTag);
+
+        int deletedCars = 0;
 
         foreach (GameObject npcCar in npcCars)
         {
-            if (npcCar != null)
-            {
-                Destroy(npcCar);
-            }
+            if (npcCar == null)
+                continue;
+
+            // Ne jamais supprimer le GameObject qui contient
+            // SceneFadeTransition.
+            if (IsPartOfThisObject(npcCar))
+                continue;
+
+            Destroy(npcCar);
+            deletedCars++;
         }
 
         Debug.Log(
             "[SceneFadeTransition] " +
-            npcCars.Length +
+            deletedCars +
             " NPC car(s) supprimé(s)."
         );
 
-        // --- CAR GENERATORS ---
+
+        // =========================================================
+        // CAR GENERATORS
+        // =========================================================
+
         GameObject[] carGenerators =
             GameObject.FindGameObjectsWithTag(carGeneratorTag);
 
+        int deletedGenerators = 0;
+
         foreach (GameObject generator in carGenerators)
         {
-            if (generator != null)
-            {
-                Destroy(generator);
-            }
+            if (generator == null)
+                continue;
+
+            // Très important :
+            // si le generator est le parent du GameObject
+            // contenant ce script, on ne le détruit pas.
+            if (IsPartOfThisObject(generator))
+                continue;
+
+            Destroy(generator);
+            deletedGenerators++;
         }
 
         Debug.Log(
             "[SceneFadeTransition] " +
-            carGenerators.Length +
+            deletedGenerators +
             " car generator(s) supprimé(s)."
         );
     }
 
+    private bool IsPartOfThisObject(GameObject target)
+    {
+        // Le GameObject lui-même.
+        if (target == gameObject)
+            return true;
+
+        // Vérifie si target est un parent de ce script.
+        Transform current = transform;
+
+        while (current != null)
+        {
+            if (current.gameObject == target)
+                return true;
+
+            current = current.parent;
+        }
+
+        // Vérifie également si target est un enfant
+        // du GameObject contenant ce script.
+        Transform targetTransform = target.transform;
+
+        if (targetTransform.IsChildOf(transform))
+            return true;
+
+        return false;
+    }
+
     private IEnumerator FadeAndLoadScene()
     {
-        // --- Fondu vers le noir ---
+        // =========================================================
+        // FONDU VERS LE NOIR
+        // =========================================================
+
         if (fadeImage != null)
         {
             float elapsed = 0f;
+
             Color c = fadeImage.color;
 
             while (elapsed < fadeDuration)
             {
                 elapsed += Time.deltaTime;
 
-                c.a = Mathf.Clamp01(
-                    elapsed / fadeDuration
-                );
+                c.a =
+                    Mathf.Clamp01(
+                        elapsed / fadeDuration
+                    );
 
                 fadeImage.color = c;
 
@@ -147,10 +207,16 @@ public class SceneFadeTransition : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(fadeDuration);
+            // Même sans image, on garde le timing.
+            yield return new WaitForSeconds(
+                fadeDuration
+            );
         }
 
-        // --- CHARGEMENT DU SCORE AVEC TEMPS RESTANT ---
+
+        // =========================================================
+        // CHARGEMENT DU SCORE AVEC TEMPS RESTANT
+        // =========================================================
 
         int currentTotal =
             PlayerPrefs.GetInt(
@@ -169,10 +235,13 @@ public class SceneFadeTransition : MonoBehaviour
         }
 
         int pointsTemps =
-            Mathf.RoundToInt(tempsRestant);
+            Mathf.RoundToInt(
+                tempsRestant
+            );
 
         int scoreGagnePourCeNiveau =
-            scoreBaseNiveau + pointsTemps;
+            scoreBaseNiveau +
+            pointsTemps;
 
         currentTotal +=
             scoreGagnePourCeNiveau;
@@ -184,11 +253,16 @@ public class SceneFadeTransition : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        // --- CHARGEMENT DE LA NOUVELLE SCÈNE ---
+
+        // =========================================================
+        // CHARGEMENT DE LA NOUVELLE SCÈNE
+        // =========================================================
 
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
-            SceneManager.LoadScene(sceneToLoad);
+            SceneManager.LoadScene(
+                sceneToLoad
+            );
         }
         else
         {
@@ -199,3 +273,4 @@ public class SceneFadeTransition : MonoBehaviour
         }
     }
 }
+
