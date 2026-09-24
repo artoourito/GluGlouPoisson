@@ -357,7 +357,7 @@ MonoBehaviour:
   rotationSpeed: 10
   use2DRotation: 0
   minSpeedThreshold: 0.05
-  rotationOffset: 0
+  rotationOffset: 180
 --- !u!114 &1119439184291786390
 MonoBehaviour:
   m_ObjectHideFlags: 0
