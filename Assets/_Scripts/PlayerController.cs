@@ -95,11 +95,11 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton1Action +=
             OnRandomButton1Called;
 
+        InputManager.Instance.randomButton1CanceledAction +=
+            OnRandomButton1Canceled;
+
         InputManager.Instance.randomButton2Action +=
             OnRandomButton2Called;
-
-        InputManager.Instance.randomButton2CanceledAction +=
-            OnRandomButton2Canceled;
 
         InputManager.Instance.randomButton3Action +=
             OnRandomButton3Called;
@@ -149,11 +149,11 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.randomButton1Action -=
             OnRandomButton1Called;
 
+        InputManager.Instance.randomButton1CanceledAction -=
+            OnRandomButton1Canceled;
+
         InputManager.Instance.randomButton2Action -=
             OnRandomButton2Called;
-
-        InputManager.Instance.randomButton2CanceledAction -=
-            OnRandomButton2Canceled;
 
         InputManager.Instance.randomButton3Action -=
             OnRandomButton3Called;
@@ -176,6 +176,9 @@ public class PlayerController : MonoBehaviour
             _bounceTimer -= Time.deltaTime;
             return;
         }
+
+
+        // Speed transition
 
         if (_isTransitioning)
         {
@@ -211,6 +214,8 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        // Steering
+
         currentAngle =
             Mathf.MoveTowards(
                 currentAngle,
@@ -235,6 +240,8 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        // Rigidbody
+
         Vector3 targetVelocity =
             transform.forward * moveSpeed;
 
@@ -244,6 +251,8 @@ public class PlayerController : MonoBehaviour
         _rb.linearVelocity =
             targetVelocity;
 
+
+        // Wheels
 
         foreach (Transform wheel in wheels)
         {
@@ -327,22 +336,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // RANDOM BUTTON 1 = DISCO
+    // RANDOM BUTTON 1 = KLAXON
+
     private void OnRandomButton1Called()
     {
-        Debug.Log("Disco");
-
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.Play(discoSoundId);
-        }
-    }
-
-
-    // RANDOM BUTTON 2 = HONK
-    private void OnRandomButton2Called()
-    {
-        Debug.Log("Honk");
+        Debug.Log("Klaxon");
 
         if (SoundManager.Instance != null)
         {
@@ -351,9 +349,9 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void OnRandomButton2Canceled()
+    private void OnRandomButton1Canceled()
     {
-        Debug.Log("Honk released");
+        Debug.Log("Klaxon relâché");
 
         if (SoundManager.Instance != null)
         {
@@ -362,10 +360,24 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // RANDOM BUTTON 3 = NOTHING
+    // RANDOM BUTTON 2 = WARNINGS
+
+    private void OnRandomButton2Called()
+    {
+        Debug.Log("Warnings");
+    }
+
+
+    // RANDOM BUTTON 3 = DISCO
+
     private void OnRandomButton3Called()
     {
-        Debug.Log("Random Button 3 - Nothing");
+        Debug.Log("Disco");
+
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.Play(discoSoundId);
+        }
     }
 
 
