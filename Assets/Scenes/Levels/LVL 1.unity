@@ -1941,7 +1941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3988270874800833058, guid: f5490a3fd8aac4e4dad5d9c98d8a16e0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5332403159559061728, guid: f5490a3fd8aac4e4dad5d9c98d8a16e0, type: 3}
       propertyPath: playerController
