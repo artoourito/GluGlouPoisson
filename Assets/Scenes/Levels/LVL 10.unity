@@ -922,7 +922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.4
+      value: 13.7
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.y
@@ -930,7 +930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.5
+      value: 24.6
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1547,6 +1547,7 @@ MonoBehaviour:
   allowedTag: Player
   triggerAngle: 90
   triggerAngleTolerance: 1
+  npcCarTag: npcar
 --- !u!1001 &1295403762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2267,8 +2268,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7017744352244127455, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: fadeImage
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2979077749172234525, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+    - {fileID: 7017744352244127455, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4997418751899624906, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
     m_AddedGameObjects:

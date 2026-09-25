@@ -21,6 +21,10 @@ public class SceneFadeTransitionAngle : MonoBehaviour
     [Tooltip("Marge de tolérance autour de l'angle requis.")]
     [SerializeField] private float triggerAngleTolerance = 15f;
 
+    [Header("Destruction des NPC cars")]
+    [Tooltip("Tag des objets à détruire au contact du joueur.")]
+    [SerializeField] private string npcCarTag = "npcar";
+
     private bool transitionStarted = false;
 
     private void Awake()
@@ -65,8 +69,22 @@ public class SceneFadeTransitionAngle : MonoBehaviour
             return;
 
         Debug.Log("[SceneFadeTransitionAngle] Angle correct, lancement de la transition.");
+
+        DestroyAllNpcCars();
+
         transitionStarted = true;
         StartCoroutine(FadeAndLoadScene());
+    }
+
+    private void DestroyAllNpcCars()
+    {
+        if (string.IsNullOrEmpty(npcCarTag)) return;
+
+        GameObject[] npcCars = GameObject.FindGameObjectsWithTag(npcCarTag);
+        foreach (GameObject npcCar in npcCars)
+        {
+            Destroy(npcCar);
+        }
     }
 
     private IEnumerator FadeAndLoadScene()

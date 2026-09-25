@@ -159,10 +159,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2959180146484348267}
-  - component: {fileID: 2979077749172234525}
   - component: {fileID: 8389037653249730423}
   - component: {fileID: 7379186024605829574}
   - component: {fileID: 7648037090741400346}
+  - component: {fileID: 7017744352244127455}
   m_Layer: 0
   m_Name: WinCollider
   m_TagString: Untagged
@@ -185,22 +185,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5237306103645799955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2979077749172234525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778953883842139756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c989d22aad9edf54e9b54f81a914818b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneFadeTransition
-  fadeImage: {fileID: 6994009674673647185}
-  fadeDuration: 1.5
-  sceneToLoad: LVL 4
-  requiredTag: Player
 --- !u!65 &8389037653249730423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -279,6 +263,22 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7017744352244127455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778953883842139756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735a2152cfe42924db67ad25467f09e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneFadeTransition
+  fadeImage: {fileID: 6994009674673647185}
+  fadeDuration: 1.5
+  sceneToLoad: 
+  requiredTag: Player
 --- !u!1 &1806564809350116136
 GameObject:
   m_ObjectHideFlags: 0

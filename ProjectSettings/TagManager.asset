@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - CarGenerator
-  - NPCCAR
+  - npcar
   layers:
   - Default
   - TransparentFX

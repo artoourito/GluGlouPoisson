@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 153025384525149411}
   m_Layer: 0
   m_Name: PNJ car
-  m_TagString: NPCCAR
+  m_TagString: npcar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
