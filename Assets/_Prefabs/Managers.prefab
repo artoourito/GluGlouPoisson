@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 8389037653249730423}
   - component: {fileID: 7379186024605829574}
   - component: {fileID: 7648037090741400346}
-  - component: {fileID: 7017744352244127455}
+  - component: {fileID: 139712475975473158}
   m_Layer: 0
   m_Name: WinCollider
   m_TagString: Untagged
@@ -179,8 +179,8 @@ Transform:
   m_GameObject: {fileID: 1778953883842139756}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 99.8, y: 4.9244, z: 203.0606}
-  m_LocalScale: {x: 6.9267697, y: 12.689483, z: 32.72531}
+  m_LocalPosition: {x: -0.3494, y: 30.3687, z: 135.5}
+  m_LocalScale: {x: 46.940662, y: 17.011457, z: 32.72531}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5237306103645799955}
@@ -263,7 +263,7 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7017744352244127455
+--- !u!114 &139712475975473158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,8 +277,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneFadeTransition
   fadeImage: {fileID: 6994009674673647185}
   fadeDuration: 1.5
-  sceneToLoad: 
+  sceneToLoad: LVL 2
   requiredTag: Player
+  npcCarTag: npcar
+  oscReceiver: {fileID: 0}
+  newOscPort: 8001
 --- !u!1 &1806564809350116136
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,16 +440,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3147925278486332225}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.008688496, y: -0.13639009, z: -0.06297791, w: 0.9886132}
+  m_LocalPosition: {x: 0, y: 0, z: 0.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4658329341757237561}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -15.71, z: -7.29}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.44, y: 154}
+  m_AnchoredPosition: {x: -247.9, y: 145.1}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5760126490116831922
@@ -479,8 +482,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 89f8938d58d2bf743b883975610c010f, type: 2}
+  m_sharedMaterial: {fileID: 3283710138979242610, guid: 89f8938d58d2bf743b883975610c010f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -631,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7642245d2a230d24b99631a55e827501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  levelDuration: 300
+  levelDuration: 90
   timerText: {fileID: 0}
   gameOverSceneName: Menu
   delayBeforeSceneLoad: 1
@@ -1333,7 +1336,7 @@ MonoBehaviour:
     loop: 0
   - id: MusiqueDeFondControleurAlternatif
     clip: {fileID: 8300000, guid: cdc922f18deaff34f81292f8a88a0a91, type: 3}
-    volume: 0.163
+    volume: 0.053
     pitch: 1
     loop: 0
   - id: MusiquePourModeDisco
@@ -1412,7 +1415,7 @@ MonoBehaviour:
     pitch: 1
     loop: 0
   - id: RandomButton3
-    clip: {fileID: 8300000, guid: 3100b39efa622934d88755a427dc219c, type: 3}
+    clip: {fileID: 8300000, guid: c31e2aa0a2b8b35419733e483f2a84cb, type: 3}
     volume: 0.5
     pitch: 1
     loop: 0
@@ -1438,6 +1441,11 @@ MonoBehaviour:
     loop: 0
   - id: RandomButton1
     clip: {fileID: 8300000, guid: 9a4d7e2b37b9c8a4d971228607cdc5be, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - id: blinkers
+    clip: {fileID: 8300000, guid: df0624ae6186fcc4195c8f0c953eadbd, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -1825,7 +1833,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   lightImage: {fileID: 0}
-  inputManager: {fileID: 7038822440329099418}
   engineOffColor: {r: 1, g: 0, b: 0, a: 1}
   engineOnColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &8039415686144069139

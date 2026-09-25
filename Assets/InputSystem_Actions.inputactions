@@ -670,17 +670,6 @@
                 },
                 {
                     "name": "",
-                    "id": "43d27584-9484-4a4f-a4db-ef82cada9f15",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AcceleratorPedal",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c09723ef-7d66-4134-afb9-2f511ab9bae1",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
