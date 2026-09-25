@@ -1645,9 +1645,29 @@ PrefabInstance:
       propertyPath: oscReceiver
       value: 
       objectReference: {fileID: 1138386689}
+    - target: {fileID: 1640233018600237618, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974082697739282084, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 2599304114427293382, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -750
+      objectReference: {fileID: 0}
+    - target: {fileID: 2608392948115008342, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1800
+      objectReference: {fileID: 0}
     - target: {fileID: 3456884791851339624, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: m_Name
       value: Managers
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040862563294675149, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 5237306103645799955, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1688,6 +1708,10 @@ PrefabInstance:
     - target: {fileID: 5237306103645799955, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5722545457511709532, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1800
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
