@@ -84,14 +84,14 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.automaticTransmissionAction += OnAutomaticTransmissionCalled;
 
         // RANDOM BUTTON 1 = KLAXON
-        InputManager.Instance.randomButton1Action += OnRandomButton1Called;
-        InputManager.Instance.randomButton1CanceledAction += OnRandomButton1Canceled;
+        InputManager.Instance.randomButton1Action += OnHonkStarted;
+        InputManager.Instance.randomButton1CanceledAction += OnHonkCanceled;
 
         // RANDOM BUTTON 2 = WARNINGS
-        InputManager.Instance.randomButton2Action += OnRandomButton2Called;
+        InputManager.Instance.randomButton2Action += OnWarningsCalled;
 
-        // RANDOM BUTTON 3 = DISCO
-        InputManager.Instance.randomButton3Action += OnRandomButton3Called;
+        // DISCO
+        InputManager.Instance.discoButtonAction += OnDiscoCalled;
 
         InputManager.Instance.powerButtonAction += OnPowerButtonCalled;
 
@@ -118,12 +118,12 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.carSteeringWheelAction -= OnCarSteeringWheelCalled;
         InputManager.Instance.automaticTransmissionAction -= OnAutomaticTransmissionCalled;
 
-        InputManager.Instance.randomButton1Action -= OnRandomButton1Called;
-        InputManager.Instance.randomButton1CanceledAction -= OnRandomButton1Canceled;
+        InputManager.Instance.randomButton1Action -= OnHonkStarted;
+        InputManager.Instance.randomButton1CanceledAction -= OnHonkCanceled;
 
-        InputManager.Instance.randomButton2Action -= OnRandomButton2Called;
+        InputManager.Instance.randomButton2Action -= OnWarningsCalled;
 
-        InputManager.Instance.randomButton3Action -= OnRandomButton3Called;
+        InputManager.Instance.discoButtonAction -= OnDiscoCalled;
 
         InputManager.Instance.powerButtonAction -= OnPowerButtonCalled;
 
@@ -268,70 +268,70 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Boite auto");
     }
 
-    // RANDOM BUTTON 1 = KLAXON
-    private void OnRandomButton1Called()
+    // RANDOM BUTTON 1 = KLAXON (joue tant que le bouton est maintenu)
+    private void OnHonkStarted()
     {
         Debug.Log("Klaxon");
-
-        if (SoundManager.Instance == null)
-        {
-            Debug.LogWarning("[PlayerController] SoundManager.Instance est null, le klaxon ne peut pas jouer.");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(honkSoundId))
-        {
-            Debug.LogWarning("[PlayerController] 'honkSoundId' n'est pas renseigné.");
-            return;
-        }
-
-        SoundManager.Instance.PlayLoop(honkSoundId);
+        TryPlaySound(honkSoundId, loop: true);
     }
 
-    private void OnRandomButton1Canceled()
+    private void OnHonkCanceled()
     {
         Debug.Log("Klaxon relâché");
-
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.StopLoop();
-        }
+        TryStopLoop();
     }
 
     // RANDOM BUTTON 2 = WARNINGS
-    private void OnRandomButton2Called()
+    private void OnWarningsCalled()
     {
         Debug.Log("Warnings");
-
-        if (SoundManager.Instance == null)
-        {
-            Debug.LogWarning("[PlayerController] SoundManager.Instance est null, les warnings ne peuvent pas jouer.");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(warningsSoundId))
-        {
-            Debug.LogWarning("[PlayerController] 'warningsSoundId' n'est pas renseigné.");
-            return;
-        }
-
-        SoundManager.Instance.Play(warningsSoundId);
+        TryPlaySound(warningsSoundId, loop: false);
     }
 
-    // RANDOM BUTTON 3 = DISCO
-    private void OnRandomButton3Called()
+    // DISCO
+    private void OnDiscoCalled()
     {
         Debug.Log("Disco");
-
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.Play(discoSoundId);
-        }
+        TryPlaySound(discoSoundId, loop: false);
     }
 
     private void OnPowerButtonCalled()
     {
         Power();
+    }
+
+    #endregion
+
+    #region Sound Helpers
+
+    // Point d'entrée unique utilisé par klaxon, warnings et disco pour jouer un son,
+    // avec les mêmes vérifications de sécurité.
+    private void TryPlaySound(string soundId, bool loop)
+    {
+        if (SoundManager.Instance == null)
+        {
+            Debug.LogWarning("[PlayerController] SoundManager.Instance est null, le son ne peut pas jouer.");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(soundId))
+        {
+            Debug.LogWarning("[PlayerController] L'identifiant de son n'est pas renseigné.");
+            return;
+        }
+
+        if (loop)
+            SoundManager.Instance.PlayLoop(soundId);
+        else
+            SoundManager.Instance.Play(soundId);
+    }
+
+    private void TryStopLoop()
+    {
+        if (SoundManager.Instance == null)
+            return;
+
+        SoundManager.Instance.StopLoop();
     }
 
     #endregion

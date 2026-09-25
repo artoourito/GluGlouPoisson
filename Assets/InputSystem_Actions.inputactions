@@ -779,17 +779,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f4ae4be5-7c2c-4351-a5e3-f63b444f2fb5",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RandomButton3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fd3e7727-6c0f-498d-be90-a5303fbbda99",
                     "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button8",
                     "interactions": "",
@@ -829,6 +818,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CarSteeringWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4ae4be5-7c2c-4351-a5e3-f63b444f2fb5",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DiscoButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
