@@ -6109,6 +6109,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 925881642}
     m_Modifications:
+    - target: {fileID: 139712475975473158, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: sceneToLoad
+      value: LVL 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2560464687394455922, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: levelDuration
       value: 190

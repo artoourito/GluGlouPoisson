@@ -2158,6 +2158,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 925881642}
     m_Modifications:
+    - target: {fileID: 139712475975473158, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: sceneToLoad
+      value: LVL 4
+      objectReference: {fileID: 0}
     - target: {fileID: 882120772792995207, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: player
       value: 
@@ -2165,6 +2169,18 @@ PrefabInstance:
     - target: {fileID: 2560464687394455922, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: levelDuration
       value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 2959180146484348267, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 116.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2959180146484348267, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2959180146484348267, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 239
       objectReference: {fileID: 0}
     - target: {fileID: 3456884791851339624, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
       propertyPath: m_Name
