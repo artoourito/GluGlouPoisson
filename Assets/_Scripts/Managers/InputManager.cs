@@ -279,7 +279,11 @@ public class InputManager : MonoBehaviour
     {
         switch (scene.name)
         {
+            // Menu et crédits : les contrôles reviennent à la normale
+            // (le disco doit notamment rester utilisable pendant les crédits).
             case "menu":
+            case "Menu":
+            case "Credits":
                 ResetControls();
                 break;
 
