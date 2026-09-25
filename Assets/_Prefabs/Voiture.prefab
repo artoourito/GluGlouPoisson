@@ -333,7 +333,7 @@ MonoBehaviour:
   targetAngle: 0
   angleStep: 10
   maxAngle: 60
-  turnSensitivity: 0.5
+  turnSensitivity: 1
   rotationSpeed: 100
   currentGear: 0
   minGear: -1

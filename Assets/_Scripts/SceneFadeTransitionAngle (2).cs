@@ -69,24 +69,11 @@ public class SceneFadeTransitionAngle : MonoBehaviour
             return;
 
         Debug.Log("[SceneFadeTransitionAngle] Angle correct, lancement de la transition.");
-
-        DestroyAllNpcCars();
-
+        
         transitionStarted = true;
         StartCoroutine(FadeAndLoadScene());
     }
-
-    private void DestroyAllNpcCars()
-    {
-        if (string.IsNullOrEmpty(npcCarTag)) return;
-
-        GameObject[] npcCars = GameObject.FindGameObjectsWithTag(npcCarTag);
-        foreach (GameObject npcCar in npcCars)
-        {
-            Destroy(npcCar);
-        }
-    }
-
+    
     private IEnumerator FadeAndLoadScene()
     {
         Debug.Log("[SceneFadeTransitionAngle] Début du fondu.");

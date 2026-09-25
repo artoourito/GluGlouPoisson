@@ -11,17 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9be05c15-38af-44c0-a059-5be1206f6794" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Fonts/fonnts.com-CCRegeneration SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Fonts/fonnts.com-CCRegeneration SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Fonts/fonnts.com-CCRegeneration.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Fonts/fonnts.com-CCRegeneration.otf.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Fonts/fonnts.com-CCRegenerationLevels_Inline.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Fonts/fonnts.com-CCRegenerationLevels_Inline.otf.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GluGlouPoisson/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GluGlouPoisson/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/LVL 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/LVL 1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Prefabs/Managers.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Prefabs/Managers.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Prefabs/Voiture.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Prefabs/Voiture.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Levels/LVL 10.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Levels/LVL 10.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/SceneFadeTransitionAngle (2).cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Scripts/SceneFadeTransitionAngle (2).cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
