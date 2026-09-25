@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
 
     private bool _powerOn = false;
 
+    // Vrai tant que la pédale d'embrayage (Switch Pedal) est maintenue enfoncée.
+    private bool _switchPedalHeld = false;
+
     #endregion
 
     #region Built-in Methods
@@ -246,11 +249,13 @@ public class PlayerController : MonoBehaviour
     private void OnSwitchPedalStarted()
     {
         Debug.Log("Pedal Switch Start");
+        _switchPedalHeld = true;
     }
 
     private void OnSwitchPedalCanceled()
     {
         Debug.Log("Pedal Switch Canceled");
+        _switchPedalHeld = false;
     }
 
     private void OnCarSteeringWheelCalled()
@@ -268,10 +273,19 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Klaxon");
 
-        if (SoundManager.Instance != null)
+        if (SoundManager.Instance == null)
         {
-            SoundManager.Instance.PlayLoop(honkSoundId);
+            Debug.LogWarning("[PlayerController] SoundManager.Instance est null, le klaxon ne peut pas jouer.");
+            return;
         }
+
+        if (string.IsNullOrEmpty(honkSoundId))
+        {
+            Debug.LogWarning("[PlayerController] 'honkSoundId' n'est pas renseigné.");
+            return;
+        }
+
+        SoundManager.Instance.PlayLoop(honkSoundId);
     }
 
     private void OnRandomButton1Canceled()
@@ -289,10 +303,19 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Warnings");
 
-        if (SoundManager.Instance != null)
+        if (SoundManager.Instance == null)
         {
-            SoundManager.Instance.Play(warningsSoundId);
+            Debug.LogWarning("[PlayerController] SoundManager.Instance est null, les warnings ne peuvent pas jouer.");
+            return;
         }
+
+        if (string.IsNullOrEmpty(warningsSoundId))
+        {
+            Debug.LogWarning("[PlayerController] 'warningsSoundId' n'est pas renseigné.");
+            return;
+        }
+
+        SoundManager.Instance.Play(warningsSoundId);
     }
 
     // RANDOM BUTTON 3 = DISCO
@@ -377,6 +400,12 @@ public class PlayerController : MonoBehaviour
 
     private void GearUp()
     {
+        if (!_switchPedalHeld)
+        {
+            Debug.Log("[PlayerController] Appuyez sur la pédale d'embrayage avant de changer de vitesse.");
+            return;
+        }
+
         int previousGear = currentGear;
 
         currentGear =
@@ -398,6 +427,12 @@ public class PlayerController : MonoBehaviour
 
     private void GearDown()
     {
+        if (!_switchPedalHeld)
+        {
+            Debug.Log("[PlayerController] Appuyez sur la pédale d'embrayage avant de changer de vitesse.");
+            return;
+        }
+
         int previousGear = currentGear;
 
         currentGear =

@@ -141,6 +141,8 @@ MonoBehaviour:
   sceneToLoad: LVL 2
   requiredTag: Player
   npcCarTag: npcar
+  oscReceiver: {fileID: 1138386689}
+  newOscPort: 8001
 --- !u!1001 &238921599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -605,11 +607,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2391365800605157978, guid: ffde7b0e16afc0140845e9e960c5db7d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0000011147467
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 2391365800605157978, guid: ffde7b0e16afc0140845e9e960c5db7d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 50.2
+      value: 74.9
       objectReference: {fileID: 0}
     - target: {fileID: 2391365800605157978, guid: ffde7b0e16afc0140845e9e960c5db7d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -643,6 +645,10 @@ PrefabInstance:
       propertyPath: voiceline
       value: 
       objectReference: {fileID: 8300000, guid: 0e8b8b4ce5b1fc142847e421f78bcea2, type: 3}
+    - target: {fileID: 6963473589631978197, guid: ffde7b0e16afc0140845e9e960c5db7d, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7256071730848703311, guid: ffde7b0e16afc0140845e9e960c5db7d, type: 3}
       propertyPath: m_Name
       value: VoiceTrigger (1)
@@ -873,7 +879,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5394526290299491696, guid: 701af3cad3b810d438931ab67330f8c2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 69.98
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5394526290299491696, guid: 701af3cad3b810d438931ab67330f8c2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1309,7 +1315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.65
+      value: -4.4
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1317,7 +1323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.16
+      value: -12.7
       objectReference: {fileID: 0}
     - target: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1373,6 +1379,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4685638636221723575, guid: 58eda98bac87c914f883e00526463592, type: 3}
   m_PrefabInstance: {fileID: 1122242322}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1138386689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4776663949080518580, guid: f5490a3fd8aac4e4dad5d9c98d8a16e0, type: 3}
+  m_PrefabInstance: {fileID: 1903625914}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c0c9b3c38bc1b4fa58434e762579eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Media.Osc.Components::Unity.Media.Osc.OscNetworkReceiver
 --- !u!1001 &1197855852
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1813,6 +1830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2979077749172234525, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
+    - {fileID: 7017744352244127455, guid: b37d651bdf2b2724dab727a73ee48dea, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1941,6 +1959,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3988270874800833058, guid: f5490a3fd8aac4e4dad5d9c98d8a16e0, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776663949080518580, guid: f5490a3fd8aac4e4dad5d9c98d8a16e0, type: 3}
+      propertyPath: m_ReceiveMulticast
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5332403159559061728, guid: f5490a3fd8aac4e4dad5d9c98d8a16e0, type: 3}
