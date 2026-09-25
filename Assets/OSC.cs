@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OSC : MonoBehaviour
 {
@@ -15,6 +16,18 @@ public class OSC : MonoBehaviour
         instance = this;
     }
 
+    // On s'abonne à l'événement quand l'objet se réveille/s'active
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // On se désabonne (très important pour éviter les bugs de mémoire)
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -27,5 +40,10 @@ public class OSC : MonoBehaviour
             playerController.SetSteeringInput(value);
             Debug.Log(value);
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        playerController = FindAnyObjectByType<PlayerController>();
     }
 }
