@@ -621,6 +621,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "DiscoButton",
+                    "type": "Button",
+                    "id": "55a7c59b-10f4-4640-8597-1428b6c354a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -665,6 +675,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43d27584-9484-4a4f-a4db-ef82cada9f15",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AcceleratorPedal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -808,6 +829,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "CarSteeringWheel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdf9dd02-c065-4dce-a6bd-459e0a21a29e",
+                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DiscoButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

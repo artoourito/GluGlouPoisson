@@ -26,6 +26,8 @@ public class InputManager : MonoBehaviour
 
     public event Action randomButton3Action;
 
+    public event Action discoButtonAction;
+
     public event Action powerButtonAction;
 
     public event Action gearUpAction;
@@ -45,6 +47,7 @@ public class InputManager : MonoBehaviour
     private InputAction _randomButton2InputAction;
     private InputAction _randomButton3InputAction;
     private InputAction _powerButtonInputAction;
+    private InputAction _discoButtonAction;
 
     private InputActionMap _vehiculeMap;
 
@@ -144,6 +147,9 @@ public class InputManager : MonoBehaviour
         _powerButtonInputAction =
             InputSystem.actions.FindAction("PowerButton");
 
+        _discoButtonAction =
+            InputSystem.actions.FindAction("DiscoButton");
+
         if (_vehiculeMap == null)
         {
             Debug.LogError(
@@ -204,8 +210,8 @@ public class InputManager : MonoBehaviour
             _randomButton2InputAction.performed += RandomButton2;
 
         // DISCO
-        if (_randomButton3InputAction != null)
-            _randomButton3InputAction.performed += RandomButton3;
+        if (_discoButtonAction != null)
+            _discoButtonAction.performed += DiscoButton;
 
         if (_powerButtonInputAction != null)
             _powerButtonInputAction.performed += PowerButton;
@@ -244,8 +250,8 @@ public class InputManager : MonoBehaviour
         if (_randomButton2InputAction != null)
             _randomButton2InputAction.performed -= RandomButton2;
 
-        if (_randomButton3InputAction != null)
-            _randomButton3InputAction.performed -= RandomButton3;
+        if (_discoButtonAction != null)
+            _discoButtonAction.performed -= DiscoButton;
 
         if (_powerButtonInputAction != null)
             _powerButtonInputAction.performed -= PowerButton;
@@ -444,8 +450,9 @@ public class InputManager : MonoBehaviour
 
     // RANDOM BUTTON 3 = DISCO
 
-    private void RandomButton3(InputAction.CallbackContext context)
+    private void DiscoButton(InputAction.CallbackContext context)
     {
+        Debug.Log("Disco");
         if (_reverseDiscoSwapped)
         {
             // LVL 10:
@@ -454,7 +461,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            randomButton3Action?.Invoke();
+            discoButtonAction?.Invoke();
         }
     }
 
