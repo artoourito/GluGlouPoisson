@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Reflection;
+using Unity.Media.Osc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +25,13 @@ public class SceneFadeTransition : MonoBehaviour
     [Header("Destruction des NPC cars")]
     [Tooltip("Tag des objets à détruire au contact du joueur.")]
     [SerializeField] private string npcCarTag = "npcar";
+
+    [Header("OSC Receiver")]
+    [Tooltip("Référence au composant OSC Receiver dont il faut changer le port. Peut être sur un autre GameObject.")]
+    [SerializeField] private OscReceiver oscReceiver;
+
+    [Tooltip("Nouveau port à assigner au OSC Receiver.")]
+    [SerializeField] private int newOscPort = 8001;
 
     private bool isTransitioning = false;
 
@@ -57,22 +66,8 @@ public class SceneFadeTransition : MonoBehaviour
 
         if (!string.IsNullOrEmpty(requiredTag) && !other.CompareTag(requiredTag))
             return;
-
-        DestroyAllNpcCars();
-
         isTransitioning = true;
         StartCoroutine(FadeAndLoadScene());
-    }
-
-    private void DestroyAllNpcCars()
-    {
-        if (string.IsNullOrEmpty(npcCarTag)) return;
-
-        GameObject[] npcCars = GameObject.FindGameObjectsWithTag(npcCarTag);
-        foreach (GameObject npcCar in npcCars)
-        {
-            Destroy(npcCar);
-        }
     }
 
     private IEnumerator FadeAndLoadScene()
