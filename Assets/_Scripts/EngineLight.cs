@@ -5,7 +5,6 @@ public class EngineLight : MonoBehaviour
 {
     [Header("Références")]
     public Image lightImage;
-    public InputManager inputManager;
 
     [Header("Couleurs")]
     public Color engineOffColor = Color.red;
@@ -24,23 +23,29 @@ public class EngineLight : MonoBehaviour
             return;
         }
 
-        if (inputManager != null)
-            inputManager.powerButtonAction += ToggleEngine; // ✅ ici c'est OK
+        // 🔹 Utilise le singleton au lieu du champ Inspector
+        if (InputManager.Instance != null)
+        {
+            InputManager.Instance.powerButtonAction += ToggleEngine;
+            Debug.Log("✅ EngineLight abonné à InputManager.Instance");
+        }
         else
-            Debug.LogWarning("EngineLight : inputManager non assigné !");
+        {
+            Debug.LogError("❌ InputManager.Instance est null !");
+        }
 
         UpdateLight();
     }
 
     void OnDestroy()
     {
-        if (inputManager != null)
-            inputManager.powerButtonAction -= ToggleEngine;
+        if (InputManager.Instance != null)
+            InputManager.Instance.powerButtonAction -= ToggleEngine;
     }
 
-    // ✅ Cette méthode appartient à EngineLight, donc accessible ici
     public void ToggleEngine()
     {
+        Debug.Log("🔴 ToggleEngine appelée");
         SetEngineState(!_isEngineOn);
     }
 
