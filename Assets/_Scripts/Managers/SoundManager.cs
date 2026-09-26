@@ -80,6 +80,17 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Durée du clip associé à un identifiant (0 si inconnu ou sans clip)
+    public float GetClipLength(string id)
+    {
+        if (string.IsNullOrEmpty(id) || soundDictionary == null)
+            return 0f;
+
+        return soundDictionary.TryGetValue(id, out Sound sound) && sound.clip != null
+            ? sound.clip.length
+            : 0f;
+    }
+
     // Plays a sound once
     public void Play(string id)
     {

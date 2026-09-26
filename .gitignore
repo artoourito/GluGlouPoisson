@@ -104,3 +104,17 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Claude Code (fichiers de session/config de l'assistant)
+/CLAUDE.md
+/CLAUDE.local.md
+/.claude/
+/.mcp.json
+
+# MCP for Unity (package vendorisé + fichiers générés par le pont)
+/unity-mcp-main/
+/[Aa]ssets/MCPForUnity*
+/[Aa]ssets/[Ee]ditor/MCPForUnity*
+/[Aa]ssets/[Ss]treamingAssets/MCPForUnity*
+/[Aa]ssets/[Rr]esources/MCPForUnity*
+/[Ll]ibrary/MCPForUnity*

@@ -1547,7 +1547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneFadeTransitionAngle
   fadeImage: {fileID: 1181963293}
   fadeDuration: 1.5
-  targetSceneName: Menu
+  targetSceneName: Credits
   allowedTag: Player
   triggerAngle: 90
   triggerAngleTolerance: 1

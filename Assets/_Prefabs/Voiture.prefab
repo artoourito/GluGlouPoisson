@@ -280,6 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4685638636221723575}
   - component: {fileID: 7648150771720964596}
+  - component: {fileID: 5402109024876621824}
   - component: {fileID: 405516336568483645}
   - component: {fileID: 5807651474139696816}
   - component: {fileID: 1219773520734857078}
@@ -365,12 +366,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  discoSoundId: RandomButton2
+  discoSoundId: MusiquePourModeDisco
   honkSoundId: RandomButton3
   warningsSoundId: blinkers
+  discoEffect: {fileID: 5402109024876621824}
   wheels:
   - {fileID: 7370812797074531483}
   - {fileID: 5853608840668807357}
+--- !u!114 &5402109024876621824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818705757850669688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951e652bcea64ee79e1085bb5cf619a0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::DiscoEffect
 --- !u!54 &405516336568483645
 Rigidbody:
   m_ObjectHideFlags: 0

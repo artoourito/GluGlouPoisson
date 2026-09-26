@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 130495987789540077}
   - component: {fileID: 4756218001940623506}
   - component: {fileID: 4766179328970001459}
+  - component: {fileID: 1377826682771970816}
   - component: {fileID: 2774537504180596426}
   - component: {fileID: 478635023421923161}
   m_Layer: 0
@@ -289,6 +290,31 @@ MonoBehaviour:
   - {fileID: -8902730706307680209, guid: 0b6987ba8b76d1641937aa4f8ca52e68, type: 3}
   - {fileID: 1875893139071438443, guid: 6cb1b1cca831e3e4c82de9b541c5226b, type: 3}
   randomizeEveryTimeEnabled: 1
+--- !u!114 &1377826682771970816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7367989884102065746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fdfe2f55695439da716c77832389fde, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::SquashAndStretch
+  amplitude: 0.05
+  preserveVolume: 1
+  horizontalWeight: 0.5
+  frequency: 1.5
+  randomizePhase: 1
+  shape:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  anchorBottom: 0
+  halfHeight: 0
 --- !u!114 &2774537504180596426
 MonoBehaviour:
   m_ObjectHideFlags: 0

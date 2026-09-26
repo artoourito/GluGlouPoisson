@@ -43,6 +43,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private string honkSoundId;
     [SerializeField] private string warningsSoundId;
 
+    [Header("Disco")]
+    [Tooltip("Effet visuel disco (halos dans les coins). Si vide, cherché sur le même GameObject.")]
+    [SerializeField] private DiscoEffect discoEffect;
+
     [SerializeField]
     private List<Transform> wheels =
         new List<Transform>();
@@ -99,6 +103,9 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.gearDownAction += GearDown;
 
         _rb = GetComponent<Rigidbody>();
+
+        if (discoEffect == null)
+            discoEffect = GetComponent<DiscoEffect>();
     }
 
     private void OnDisable()
@@ -293,6 +300,16 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("Disco");
         TryPlaySound(discoSoundId, loop: false);
+
+        if (discoEffect == null)
+            return;
+
+        // L'effet visuel dure aussi longtemps que le clip (0 → durée de repli de DiscoEffect).
+        float duration = SoundManager.Instance != null
+            ? SoundManager.Instance.GetClipLength(discoSoundId)
+            : 0f;
+
+        discoEffect.Play(duration);
     }
 
     private void OnPowerButtonCalled()
